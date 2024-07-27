@@ -4,10 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
-use App\Models\LocationDetailFinalModel;
-use App\Models\LocationDetailMoisModel;
-use App\Models\BienModel;
-use App\Models\LocationCommissionModel;
+use App\Models\EtudiantModel;
+
 
 class AdminController extends BaseController
 {
@@ -42,7 +40,7 @@ class AdminController extends BaseController
                 $session->set('nom', $user['nom']);
                 $session->set('login', $user['login']);
 
-                return redirect()->to('admin/gainmois'); 
+                return redirect()->to('admin/listetudiant'); 
                 // echo "tafiditra";
             } else {
                 // Mot de passe incorrect
@@ -54,115 +52,36 @@ class AdminController extends BaseController
         }
     }
     
-    // public function Accueil()
-    // {
-    //     return view('Pages/gainAdmin');
-    //     // return view('Layout/layout',$data);
-    // }
-
-    public function register()
-    {
-        helper(['form']);
-        $session = session();
-        $model = new AdminModel();
-        $data = [
-            'nom' => $this->request->getPost('nom'),
-            'login' => $this->request->getPost('login'),
-            'passe' => $this->request->getPost('passe'),
-            'user_type' => $this->request->getPost('user_type')
-        ];
-
-        if ($data){
-            $rules = [
-                'nom' => 'required',
-                'login' => 'required|min_length[6]',
-                'passe' => 'required|min_length[6]',
-                'confirm_passe' => 'matches[passe]',
-                'user_type' => 'required|in_list[admin,propriétaire]'
-            ];
-
-            if ($this->validate($rules))
-            {
-
-                $table = $data['user_type'] == 'admin' ? 'admin' : 'propriétaire';
-                unset($data['user_type']);
-                $model->registerUser($data,$table);
-                return redirect()->to('/log');
-
-            } else {
-                $data['validation'] = $this->validator;
-                echo "error validation";
-            }
-        }
-    }
-
-
     public function logout()
     {
-        // Déconnectez l'administrateur en supprimant sa session
         $session = session();
-        $session->remove('admin_id');
+        $session->destroy();
         return redirect()->to('/');
     }
 
-    public function link_formulaireLocation()
+    public function listEtudiant()
     {
-        $model = new BienModel();
-        $data['biens'] = $model->getBiens();
-        $data = [
-            'content' => view('Pages/FormulaireLocation',$data)
+        $model = new EtudiantModel();
+        $id_prom = $this->request->getGet('id_prom');
+        $name = $this->request->getGet('name');
+
+        if ($id_prom && $name) {
+            $data['etudiants'] = $model->getEtudiantByPromAndName($id_prom, $name);
+        } elseif ($id_prom) {
+            $data['etudiants'] = $model->getEtudiantByProm($id_prom);
+        } elseif ($name) {
+            $data['etudiants'] = $model->getEtudiantByName($name);
+        } else {
+            $data['etudiants'] = $model->getAllEtudiant();
+        }
+
+        $content = view('Pages/ListeEtudiant', $data);
+
+        $layout_data = [
+            'content' => $content
         ];
-        return view('LayoutAdmin/layout',$data);
-    }
     
-    public function getCommissionFinal()
-{
-    $locationModel = new LocationDetailFinalModel();
-    
-    $date1 = $this->request->getGet('date1');
-    $date2 = $this->request->getGet('date2');
-
-    if (empty($date1) && empty($date2)) {
-        $data['locations'] = $locationModel->getLocationDetailFinal();
-    } else {
-        $data['locations']  = $locationModel->getLocationDetailFinalByDate($date1, $date2);
+        return view('LayoutAdmin/layout', $layout_data);
     }
-
-
-   
-    $content = view('Pages/gainadminfinal', $data);
-
-    $layout_data = [
-        'content' => $content
-    ];
-
-    return view('LayoutAdmin/layout', $layout_data);
-}
-
-    public function getCommissionMois()
-{
-    $locationModel = new LocationDetailMoisModel();
-    
-    $date1 = $this->request->getGet('date1');
-    $date2 = $this->request->getGet('date2');
-
-    if (empty($date1) && empty($date2)) {
-        $data['locations'] = $locationModel->getLocationDetailMois();
-    } else {
-        $data['locations']  = $locationModel->getLocationDetailMoisByDate($date1, $date2);
-    }
-
-
-   
-    $content = view('Pages/gainadminmois', $data);
-
-    $layout_data = [
-        'content' => $content
-    ];
-
-    return view('LayoutAdmin/layout', $layout_data);
-}
-
-
     
 }

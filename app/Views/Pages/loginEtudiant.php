@@ -51,7 +51,7 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Se connecter</h5>
-                    <p class="text-center small">Entrer votre numero de telephone</p>
+                    <p class="text-center small">Entrer votre numero ITU</p>
                     <?php if (session()->has('error')) : ?>
                       <div><?= session('error') ?></div>
                     <?php endif; ?>
@@ -60,9 +60,9 @@
                   <form class="row g-3"  method="post" action="<?= base_url('/proprio/login') ?>">
                     <div class="col-12">
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">+261</span>
+                        <span class="input-group-text" id="inputGroupPrepend">ETU</span>
                         <input type="text" name="telephone" class="form-control" id="telephone" required>
-                        <div class="invalid-feedback">Veuillez entrer votre telephone</div>
+                        <div class="invalid-feedback">Veuillez entrer votre numero ITU</div>
                       </div>
                     </div>
                     <div class="col-12">

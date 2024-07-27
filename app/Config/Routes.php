@@ -11,14 +11,14 @@ $routes->get('/','AdminController::log');
 $routes->post('/login', 'AdminController::process');
 $routes->get('admin/resetables', 'ResetData_Controller::resetdata');
 $routes->post('admin/logout', 'AdminController::logout');
-
-
+$routes->get('admin/listetudiant', 'AdminController::listetudiant');
 $routes->get('admin/import','ImportController::index');
 $routes->post('importcsv', 'ImportController::importcsv');
 
-$routes->get('/proprio', 'ProprietaireController::log');
-$routes->post('/proprio/login', 'ProprietaireController::loginproprietaire');
-$routes->post('/proprio/logout', 'ProprietaireController::logout');
+$routes->get('/etudiant', 'EtudiantController::log');
+$routes->post('/etudiant/login', 'EtudiantController::loginetudiant');
+$routes->get('/etudiant/listesemestre', 'EtudiantController::loginetudiant');
+$routes->post('/etudiant/logout', 'EtudiantController::logout');
 
 // routes teste pour fonctions -------------------------------------------
 

@@ -1,16 +1,11 @@
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link " href="<?= base_url('admin/gainmois') ?>">
+            <a class="nav-link " href="<?= base_url('admin/listetudiant') ?>">
                 <i class="bi bi-grid"></i>
-                <span>Revenus et Gains Par mois</span>
+                <span>Liste des Etudiants</span>
             </a>
-        <li class="nav-item">
-        <li class="nav-item">
-            <a class="nav-link " href="<?= base_url('admin/gainfinal') ?>">
-                <i class="bi bi-grid"></i>
-                <span>Revenus et Gains Total Par mois</span>
-            </a>
+        </li>
         <li class="nav-item">
         <a class="nav-link " href="<?= base_url('admin/import') ?>">
             <i class="bi bi-menu-button-wide"></i>
