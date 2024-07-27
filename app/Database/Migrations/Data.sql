@@ -2,11 +2,11 @@ create table admin
 (
     id_admin serial primary key NOT NULL,
     nom VARCHAR(255),
-    email VARCHAR(255),
+    login VARCHAR(255),
     mdp VARCHAR(255)
 );
 
-INSERT INTO admin (nom, email, mdp) VALUES ('Admin', 'admin@gmail.com', '123');
+INSERT INTO admin (nom,login,mdp) VALUES ('Admin', 'admin@gmail.com', '123');
 
 create table promotion 
 (
@@ -14,7 +14,7 @@ create table promotion
     nom_promotion VARCHAR(255)
 );
 
-INSERT INTO admin (nom_promotion) VALUES ('P15');
+INSERT INTO promotion (nom_promotion) VALUES ('P15');
 
 create table etudiant 
 (
@@ -27,7 +27,7 @@ create table etudiant
     FOREIGN KEY (id_prom) REFERENCES promotion(id_prom)
 );
 
-INSERT INTO admin (id_prom, etu, nom, prenom, dtn) VALUES (1,1610,'Rakoto','Jean','10-02-1997');
+INSERT INTO etudiant (id_prom, etu, nom, prenom, dtn) VALUES (1,1610,'Rakoto','Jean','10-02-1997');
 
 create table semestre 
 (
@@ -35,12 +35,12 @@ create table semestre
     nom_semestre VARCHAR(255)
 );
 
-INSERT INTO admin (nom_semestre) VALUES ('S1');
-INSERT INTO admin (nom_semestre) VALUES ('S2');
-INSERT INTO admin (nom_semestre) VALUES ('S3');
-INSERT INTO admin (nom_semestre) VALUES ('S4');
-INSERT INTO admin (nom_semestre) VALUES ('S5');
-INSERT INTO admin (nom_semestre) VALUES ('S6');
+INSERT INTO semestre (nom_semestre) VALUES ('S1');
+INSERT INTO semestre (nom_semestre) VALUES ('S2');
+INSERT INTO semestre (nom_semestre) VALUES ('S3');
+INSERT INTO semestre (nom_semestre) VALUES ('S4');
+INSERT INTO semestre (nom_semestre) VALUES ('S5');
+INSERT INTO semestre (nom_semestre) VALUES ('S6');
 
 create table matiere
 (
