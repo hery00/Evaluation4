@@ -52,6 +52,7 @@ create table matiere
     FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre)
 );
 
+
 -- Insertion des matières pour le semestre 1
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 (1, 'INF101', 'Programmation procédurale', 7),
@@ -114,8 +115,76 @@ create table notes
     id_note serial primary key NOT NULL,
     id_etudiant INT,
     id_matiere INT,
-    notes NUMERIC(2,2),
+    notes NUMERIC(5,2),
     session DATE,
     FOREIGN KEY (id_etudiant) REFERENCES etudiant(id_etudiant),
     FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere)
 );
+
+-- Insertion de notes pour l'étudiant avec id_etudiant = 1
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (1, 1, 0, '2024-06-15'),
+    (1, 2, 16.00, '2024-06-15'),
+    (1, 3, 14.75, '2024-06-15'),
+    (1, 4, 13.25, '2024-06-15'),
+    (1, 5, 17.00, '2024-06-15'),
+    (1, 6, 18.50, '2024-06-15');
+
+-- Insertion de notes pour l'étudiant avec id_etudiant = 1 pour le semestre 2
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (1, 7, 9, '2024-07-10'), 
+    (1, 8, 9, '2024-07-10'),
+    (1, 9, 9, '2024-07-10'),
+    (1, 10, 17.00, '2024-07-10'),
+    (1, 11, 18.00, '2024-07-10'),
+    (1, 12, 16.50, '2024-07-10');
+
+
+-- Insertion de notes pour l'étudiant avec id_etudiant = 1 pour le semestre 3
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (1, 13, 16.75, '2024-07-10'), 
+    (1, 14, 5, '2024-07-10'), 
+    (1, 15, 9.50, '2024-07-10'),
+    (1, 16, 17.25, '2024-07-10'),
+    (1, 17, 18.00, '2024-07-10'),
+    (1, 18, 16.00, '2024-07-10');
+
+-- Insérer les notes pour l'étudiant avec id_etudiant = 1 pour le semestre 4
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (1, 19, 15.50, '2024-07-10'),
+    (1, 20, 14.75, '2024-07-10'),
+    (1, 21, 16.00, '2024-07-10'),
+    (1, 22, 17.25, '2024-07-10'),
+    (1, 23, 18.00, '2024-07-10'),
+    (1, 24, 15.00, '2024-07-10'),
+    (1, 25, 14.50, '2024-07-10'),
+    (1, 26, 16.25, '2024-07-10'),
+    (1, 27, 15.75, '2024-07-10');
+
+
+-- Insérer les notes pour l'étudiant avec id_etudiant = 1 pour le semestre 5
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (1, 28, 15.00, '2024-07-10'),
+    (1, 29, 14.50, '2024-07-10'), 
+    (1, 30, 16.25, '2024-07-10'), 
+    (1, 31, 13.75, '2024-07-10'), 
+    (1, 32, 14.00, '2024-07-10'),
+    (1, 33, 15.50, '2024-07-10');
+
+
+
+-- Insérer les notes pour l'étudiant avec id_etudiant = 1 pour le semestre 6
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (1, 34, 6, '2024-07-10'),  
+    (1, 35, 9, '2024-07-10'),  
+    (1, 36, 14.75, '2024-07-10'),
+    (1, 37, 17.00, '2024-07-10'),
+    (1, 38, 18.00, '2024-07-10'), 
+    (1, 39, 15.00, '2024-07-10');
+

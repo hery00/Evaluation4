@@ -4,7 +4,6 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <!-- En-tête pour les détails de l'étudiant -->
                         <div class="row">
                             <div class="col-lg-6">
                                 <h5 class="card-title">Détails de l'Étudiant</h5>
