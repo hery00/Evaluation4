@@ -27,7 +27,7 @@ create table etudiant
     FOREIGN KEY (id_prom) REFERENCES promotion(id_prom)
 );
 
-INSERT INTO admin (id_prom, etu, nom, prenom, dtn) VALUES (1,1610,'Rakoto','Jean','10/02/1997');
+INSERT INTO admin (id_prom, etu, nom, prenom, dtn) VALUES (1,1610,'Rakoto','Jean','10-02-1997');
 
 create table semestre 
 (
