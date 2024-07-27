@@ -64,7 +64,7 @@ INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 -- Insertion des matières pour le semestre 2
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 (2, 'INF102', 'Bases de données relationnelles', 5),
-(2, 'INF103', 'Bases de l’administration système', 5),
+(2, 'INF103', 'Bases de l''administration système', 5),
 (2, 'INF105', 'Maintenance matériel et logiciel', 4),
 (2, 'INF106', 'Compléments de programmation', 6),
 (2, 'MTH103', 'Calcul Vectoriel et Matriciel', 6),
@@ -81,10 +81,10 @@ INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 
 -- Insertion des matières pour le semestre 4 (Parcours : Développement)
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
-(4, 'INF204', 'Système d’information géographique', 6),
-(4, 'INF205', 'Système d’information', 6),
+(4, 'INF204', 'Système d''information géographique', 6),
+(4, 'INF205', 'Système d''information', 6),
 (4, 'INF206', 'Interface Homme/Machine', 6),
-(4, 'INF207', 'Eléments d’algorithmique', 6),
+(4, 'INF207', 'Eléments d''algorithmique', 6),
 (4, 'INF210', 'Mini-projet de développement', 10),
 (4, 'MTH204', 'Géométrie', 4),
 (4, 'MTH205', 'Equations différentielles', 4),
@@ -96,7 +96,7 @@ INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 (5, 'INF301', 'Architecture logicielle', 6),
 (5, 'INF304', 'Développement pour mobiles', 6),
 (5, 'INF307', 'Conception en modèle orienté objet', 6),
-(5, 'ORG301', 'Gestion d’entreprise', 5),
+(5, 'ORG301', 'Gestion d''entreprise', 5),
 (5, 'ORG302', 'Gestion de projets', 4),
 (5, 'ORG303', 'Anglais pour les affaires', 3);
 
@@ -104,10 +104,10 @@ INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 (6, 'INF310', 'Codage', 4),
 (6, 'INF313', 'Programmation avancée, frameworks', 6),
-(6, 'INF302', 'Technologies d’accès aux réseaux', 6),
+(6, 'INF302', 'Technologies d''accès aux réseaux', 6),
 (6, 'INF303', 'Multimédia', 6),
 (6, 'INF316', 'Projet de développement', 10),
-(6, 'ORG304', 'Communication d’entreprise', 4);
+(6, 'ORG304', 'Communication d''entreprise', 4);
 
 create table notes
 (
