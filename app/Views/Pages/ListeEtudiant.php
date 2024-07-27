@@ -1,45 +1,66 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Liste des Étudiants</title>
-</head>
-<body>
-    <h1>Liste des Étudiants</h1>
-    <form method="get" action="<?= base_url('admin/listetudiant') ?>">
-        <label for="id_prom">Promotion:</label>
-        <input type="text" name="id_prom" id="id_prom" value="<?= isset($id_prom) ? $id_prom : '' ?>"><br>
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6"><br/><br/><h5 class="card-title">LISTE DES ÉTUDIANTS</h5></div>
+                            <div class="col-lg-6">
+                            </div>  
+                        </div>
+                        <form id="choixForm" action="<?= base_url('admin/listetudiant') ?>" method="GET">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-4">
+                                    <div class="input-group col-md-4">
+                                        <span class="input-group-text" id="inputGroupPrepend">Promotion</span>
+                                        <input type="text" name="id_prom" class="form-control" id="id_prom" value="<?= isset($id_prom) ? $id_prom : '' ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group col-md-4">
+                                        <span class="input-group-text" id="inputGroupPrepend">Nom ou Prénom</span>
+                                        <input type="text" name="name" class="form-control" id="name" value="<?= isset($name) ? $name : '' ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-primary">Filtrer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-        <label for="name">Nom ou Prénom:</label>
-        <input type="text" name="name" id="name" value="<?= isset($name) ? $name : '' ?>"><br>
-
-        <input type="submit" value="Filtrer">
-    </form>
-    <br>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Promotion ID</th>
-            <th>ETU</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Date de Naissance</th>
-        </tr>
-        <?php if (isset($etudiants) && count($etudiants) > 0): ?>
-            <?php foreach($etudiants as $etudiant): ?>
-            <tr>
-                <td><?= $etudiant['id_etudiant']; ?></td>
-                <td><?= $etudiant['id_prom']; ?></td>
-                <td><?= $etudiant['etu']; ?></td>
-                <td><?= $etudiant['nom']; ?></td>
-                <td><?= $etudiant['prenom']; ?></td>
-                <td><?= $etudiant['dtn']; ?></td>
-            </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="6">Aucun étudiant trouvé.</td>
-            </tr>
-        <?php endif; ?>
-    </table>
-</body>
-</html>
+                    <?php if (isset($etudiants) && count($etudiants) > 0): ?>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align:right">ID</th>
+                                <th style="text-align:center">Promotion ID</th>
+                                <th style="text-align:left">ETU</th>
+                                <th style="text-align:left">Nom</th>
+                                <th style="text-align:left">Prénom</th>
+                                <th style="text-align:center">Date de Naissance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($etudiants as $etudiant): ?>
+                            <tr>
+                                <td style="text-align:right"><?= esc($etudiant['id_etudiant']); ?></td>
+                                <td style="text-align:center"><?= esc($etudiant['id_prom']); ?></td>
+                                <td style="text-align:left"><?= esc($etudiant['etu']); ?></td>
+                                <td style="text-align:left"><?= esc($etudiant['nom']); ?></td>
+                                <td style="text-align:left"><?= esc($etudiant['prenom']); ?></td>
+                                <td style="text-align:center"><?= esc($etudiant['dtn']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php else: ?>
+                        <p>Aucun étudiant trouvé.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
