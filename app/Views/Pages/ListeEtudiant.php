@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group col-md-4">
-                                        <span class="input-group-text" id="inputGroupPrepend">Nom ou Prénom</span>
+                                        <span class="input-group-text" id="inputGroupPrepend">Nom</span>
                                         <input type="text" name="name" class="form-control" id="name" value="<?= isset($name) ? $name : '' ?>">
                                     </div>
                                 </div>
