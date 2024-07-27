@@ -88,9 +88,18 @@ class AdminController extends BaseController
     
     public function listesemestre()
     {
+        $model = new EtudiantModel();
         $semestreModel = new SemestreModel();
         $data['semestres'] = $semestreModel->getSemestres();
+        $etu = $this->request->getGet('etu');
+        $data['etudiant']=$model->getEtudiantByEtu($etu);
 
-        return view('Pages/listeSemestre', $data);
+        $content = view('Pages/listeSemestre', $data);
+
+        $layout_data = [
+            'content' => $content
+        ];
+    
+        return view('LayoutAdmin/layout', $layout_data);
     }
 }

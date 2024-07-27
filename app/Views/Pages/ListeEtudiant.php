@@ -53,7 +53,7 @@
                                 <td style="text-align:left"><?= esc($etudiant['nom']); ?></td>
                                 <td style="text-align:left"><?= esc($etudiant['prenom']); ?></td>
                                 <td style="text-align:center"><?= esc($etudiant['dtn']); ?></td>
-                                <td style="text-align:center"><a class="btn btn-primary" href="#">Voir note</a></td>
+                                <td style="text-align:center"><a class="btn btn-primary" href="<?= base_url('admin/listesemestre')?>?etu=<?= esc($etudiant['etu']); ?>">Voir note</a></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

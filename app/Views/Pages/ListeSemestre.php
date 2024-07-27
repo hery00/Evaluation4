@@ -1,25 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Liste des Semestres</title>
-</head>
-<body>
-    <h1>Liste des Semestres</h1>
-    <table border="1">
-        <tr>
-            <th>Nom Semestre</th>
-        </tr>
-        <?php if (!empty($semestres) && is_array($semestres)): ?>
-            <?php foreach ($semestres as $semestre): ?>
-                <tr>
-                    <td><?= esc($semestre['nom_semestre']) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="2">Aucun semestre trouvé.</td>
-            </tr>
-        <?php endif ?>
-    </table>
-</body>
-</html>
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- En-tête pour les détails de l'étudiant -->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5 class="card-title">Détails de l'Étudiant</h5>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p><strong>ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?></p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <p><strong>ETU:</strong> 00<?= esc($etudiant['etu']) ?></p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <p><strong>PROMOTION:</strong> <?= esc($etudiant['nom_promotion']) ?></p>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                           
+                        </div>
+
+                        <!-- Table pour les semestres -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table class="table">
+                                    <tbody>
+                                    <?php if (!empty($semestres) && is_array($semestres)): ?>
+                                        <td style="text-align:center"><strong>Semestre</strong></td>
+                                        <?php foreach ($semestres as $semestre): ?>
+                                            <td style="text-align:center">
+                                                <a class="btn btn-primary" href="<?= base_url('admin/listesemestre')?>?etu=<?= esc($etudiant['etu']); ?>">Voir resultat <?= esc($semestre['nom_semestre']) ?></a>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                            <td colspan="1">Aucun semestre trouvé.</td>
+                                    <?php endif ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
