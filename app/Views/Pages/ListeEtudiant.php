@@ -41,6 +41,7 @@
                                 <th style="text-align:left">Nom</th>
                                 <th style="text-align:left">Prénom</th>
                                 <th style="text-align:center">Date de Naissance</th>
+                                <th style="text-align:center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,6 +53,7 @@
                                 <td style="text-align:left"><?= esc($etudiant['nom']); ?></td>
                                 <td style="text-align:left"><?= esc($etudiant['prenom']); ?></td>
                                 <td style="text-align:center"><?= esc($etudiant['dtn']); ?></td>
+                                <td style="text-align:center"><a class="btn btn-primary" href="#">Voir note</a></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
