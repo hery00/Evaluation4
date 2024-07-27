@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\AdminModel;
 use App\Models\EtudiantModel;
 use App\Models\SemestreModel;
+use App\Models\MatiereModel;
 
 
 class AdminController extends BaseController
@@ -101,5 +102,16 @@ class AdminController extends BaseController
         ];
     
         return view('LayoutAdmin/layout', $layout_data);
+    }
+
+    public function listeMatiereBySemestre($id_semestre)
+    {
+        $matiereModel = new MatiereModel();
+        $data['matieres'] = $matiereModel->getMatieresBySemestre($id_semestre);
+
+        $semestreModel = new SemestreModel();
+        $data['semestre'] = $semestreModel->find($id_semestre);
+
+        return view('Pages/', $data);
     }
 }
