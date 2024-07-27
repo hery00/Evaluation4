@@ -15,7 +15,7 @@
                                 <div class="col-md-4">
                                     <div class="input-group col-md-4">
                                         <span class="input-group-text" id="inputGroupPrepend">Promotion</span>
-                                        <input type="text" name="id_prom" class="form-control" id="id_prom" value="<?= isset($id_prom) ? $id_prom : '' ?>">
+                                        <input type="text" name="prom" class="form-control" id="id_prom" value="<?= isset($id_prom) ? $id_prom : '' ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -35,8 +35,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="text-align:right">ID</th>
-                                <th style="text-align:center">Promotion ID</th>
+                                <th style="text-align:right">#</th>
+                                <th style="text-align:center">Promotion</th>
                                 <th style="text-align:left">ETU</th>
                                 <th style="text-align:left">Nom</th>
                                 <th style="text-align:left">Prénom</th>
@@ -47,7 +47,7 @@
                         <?php foreach($etudiants as $etudiant): ?>
                             <tr>
                                 <td style="text-align:right"><?= esc($etudiant['id_etudiant']); ?></td>
-                                <td style="text-align:center"><?= esc($etudiant['id_prom']); ?></td>
+                                <td style="text-align:center"><?= esc($etudiant['nom_promotion']); ?></td>
                                 <td style="text-align:left"><?= esc($etudiant['etu']); ?></td>
                                 <td style="text-align:left"><?= esc($etudiant['nom']); ?></td>
                                 <td style="text-align:left"><?= esc($etudiant['prenom']); ?></td>

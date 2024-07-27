@@ -62,13 +62,13 @@ class AdminController extends BaseController
     public function listEtudiant()
     {
         $model = new EtudiantModel();
-        $id_prom = $this->request->getGet('id_prom');
+        $prom = $this->request->getGet('prom');
         $name = $this->request->getGet('name');
 
-        if ($id_prom && $name) {
-            $data['etudiants'] = $model->getEtudiantByPromAndName($id_prom, $name);
-        } elseif ($id_prom) {
-            $data['etudiants'] = $model->getEtudiantByProm($id_prom);
+        if ($prom && $name) {
+            $data['etudiants'] = $model->getEtudiantByPromAndName($prom, $name);
+        } elseif ($prom) {
+            $data['etudiants'] = $model->getEtudiantByProm($prom);
         } elseif ($name) {
             $data['etudiants'] = $model->getEtudiantByName($name);
         } else {

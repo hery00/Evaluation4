@@ -6,9 +6,9 @@ use CodeIgniter\Model;
 
 class EtudiantModel extends Model
 {
-    protected $table = 'etudiant';
+    protected $table = 'v_etudiant_promotion';
     protected $primaryKey = 'id_etudiant';
-    protected $allowedFields = ['id_prom', 'etu', 'nom', 'prenom', 'dtn'];
+    protected $allowedFields = ['id_prom', 'etu', 'nom', 'prenom', 'dtn','nom_promotion'];
     protected $useTimestamps = false;
 
     public function getAllEtudiant()
@@ -27,27 +27,34 @@ class EtudiantModel extends Model
         return null;
     }
 
-    
-    public function getEtudiantByProm($id_prom)
+
+    public function getEtudiantByProm($prom)
     {
-        return $this->where('id_prom', $id_prom)->findAll();
+        $sql = "SELECT * FROM v_etudiant_promotion WHERE nom_promotion ILIKE ?";
+        return $this->db->query($sql, ["%$prom%"])->getResultArray();
     }
-
-
+    
     public function getEtudiantByName($name)
     {
-        return $this->like('nom', $name)->orLike('prenom', $name)->findAll();
+        $sql = "SELECT * FROM v_etudiant_promotion
+                WHERE nom ILIKE ? 
+                OR prenom ILIKE ?";
+        return $this->db->query($sql, ["%$name%", "%$name%"])->getResultArray();
     }
 
+    public function getEtudiantByPromAndName($prom, $name)
+{
+    $prom = '%'. $prom .'%';
+    $name = '%'. $name .'%';
 
-    public function getEtudiantByPromAndName($id_prom, $name)
-    {
-        return $this->where('id_prom', $id_prom)
-                    ->groupStart()
-                    ->like('nom', $name, 'both')
-                    ->orLike('prenom', $name, 'both')
-                    ->groupEnd()
-                    ->findAll();
-    }
+    $sql = "SELECT * FROM v_etudiant_promotion
+            WHERE nom_promotion ILIKE ? 
+            AND (nom ILIKE ? OR prenom ILIKE ?)";
+    return $this->db->query($sql, [$prom, $name, $name])->getResultArray();
+}
+
+    
+    
+    
 
 }
