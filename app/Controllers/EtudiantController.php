@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\EtudiantModel;
+use App\Models\SemestreModel;
 
 class EtudiantController extends BaseController
 {
@@ -29,7 +30,6 @@ class EtudiantController extends BaseController
             return redirect()->to('/etudiant')->with('error', 'Votre numero ITU est incorrecte!');
         }
     }
-
 
 
 //     public function testGetChiffreAffaire()

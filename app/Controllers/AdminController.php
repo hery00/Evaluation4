@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
 use App\Models\EtudiantModel;
+use App\Models\SemestreModel;
 
 
 class AdminController extends BaseController
@@ -84,4 +85,12 @@ class AdminController extends BaseController
         return view('LayoutAdmin/layout', $layout_data);
     }
     
+    
+    public function listesemestre()
+    {
+        $semestreModel = new SemestreModel();
+        $data['semestres'] = $semestreModel->getSemestres();
+
+        return view('Pages/listeSemestre', $data);
+    }
 }
