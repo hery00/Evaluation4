@@ -8,7 +8,6 @@ class MatiereModel extends Model
 {
     protected $table = 'matiere';
     protected $primaryKey = 'id_matiere';
-<<<<<<< Updated upstream
     protected $allowedFields = ['id_semestre','ue','intitule','credits'];
 
     public function getMatieres()
@@ -21,9 +20,4 @@ class MatiereModel extends Model
         return $this->where('id_semestre', $id_semestre)->findAll();
     }
 }
-=======
-    protected $allowedFields = ['id_matiere', 'intitule', 'credits', 'id_semestre'];
-
-    
-}
->>>>>>> Stashed changes
+   
