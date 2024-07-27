@@ -13,3 +13,5 @@ JOIN
     promotion p
 ON 
     e.id_prom = p.id_prom;
+
+

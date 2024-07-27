@@ -8,7 +8,7 @@ class MatiereModel extends Model
 {
     protected $table = 'matiere';
     protected $primaryKey = 'id_matiere';
-    protected $allowedFields = ['id_semestre','UE','intitule','credits'];
+    protected $allowedFields = ['id_semestre','ue','intitule','credits'];
 
     public function getMatieres()
     {
