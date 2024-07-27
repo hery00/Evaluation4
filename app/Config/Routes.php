@@ -10,15 +10,20 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/','AdminController::log');
 $routes->post('/login', 'AdminController::process');
 $routes->get('admin/resetables', 'ResetData_Controller::resetdata');
+
 $routes->post('admin/logout', 'AdminController::logout');
 $routes->get('admin/listetudiant', 'AdminController::listetudiant');
+$routes->get('admin/listesemestre', 'AdminController::listesemestre');
+
 $routes->get('admin/import','ImportController::index');
 $routes->post('importcsv', 'ImportController::importcsv');
 
 $routes->get('/etudiant', 'EtudiantController::log');
 $routes->post('/etudiant/login', 'EtudiantController::loginetudiant');
-$routes->get('/etudiant/listesemestre', 'EtudiantController::loginetudiant');
+// $routes->get('/etudiant/listesemestre', 'EtudiantController::getsemestre');
 $routes->post('/etudiant/logout', 'EtudiantController::logout');
+
+
 
 // routes teste pour fonctions -------------------------------------------
 
