@@ -14,6 +14,8 @@ $routes->get('admin/resetables', 'ResetData_Controller::resetdata');
 $routes->post('admin/logout', 'AdminController::logout');
 $routes->get('admin/listetudiant', 'AdminController::listetudiant');
 $routes->get('/listesemestre', 'AdminController::listesemestre');
+$routes->get('admin/formulairenote', 'AdminController::addNoteForm');
+$routes->post('/addnote', 'AdminController::addNote');
 
 $routes->get('note/semestre', 'NoteController::getnotesemestre');
 

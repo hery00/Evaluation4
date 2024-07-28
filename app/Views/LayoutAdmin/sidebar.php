@@ -7,7 +7,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " href="<?=base_url('admin/formulairelocation') ?>">
+            <a class="nav-link " href="<?=base_url('admin/formulairenote') ?>">
             <i class="bi bi-menu-button-wide"></i>
                 <span>Insertions notes</span>
             </a>

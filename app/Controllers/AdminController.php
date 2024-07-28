@@ -7,6 +7,7 @@ use App\Models\AdminModel;
 use App\Models\EtudiantModel;
 use App\Models\SemestreModel;
 use App\Models\MatiereModel;
+use App\Models\NotesModel;
 
 
 class AdminController extends BaseController
@@ -132,5 +133,35 @@ class AdminController extends BaseController
         $data['semestre'] = $semestreModel->find($id_semestre);
 
         return view('Pages/', $data);
+    }
+
+    public function addNoteForm()
+    {
+        $content =  view('Pages/formulaireNote');
+
+        $layout_data = [
+            'content' => $content
+        ];
+
+        return view('LayoutAdmin/layout', $layout_data);
+
+    }
+
+
+    public function addNote()
+    {
+        $data = [
+            'id_etudiant' => $this->request->getPost('id_etudiant'),
+            'id_matiere' => $this->request->getPost('id_matiere'),
+            'notes' => $this->request->getPost('notes'),
+            'session' => $this->request->getPost('session')
+        ];
+
+        $noteModel = new NotesModel();
+        if ($noteModel->insertNote($data)) {
+            return redirect()->to('admin/formulairenote')->with('success', 'Note ajoutée avec succès.');
+        } else {
+            return redirect()->to('admin/formulairenote')->with('error', 'Erreur lors de l\'ajout de la note.');
+        }
     }
 }

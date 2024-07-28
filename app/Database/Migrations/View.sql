@@ -1,3 +1,4 @@
+
 CREATE VIEW v_etudiant_promotion AS
 SELECT 
     e.id_etudiant,
