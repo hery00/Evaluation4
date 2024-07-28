@@ -16,8 +16,12 @@
                         <input type="text" name="id_etudiant" class="form-control" id="id_etudiant" required>
                     </div>
                     <div class="col-12">
-                        <label for="id_matiere" class="form-label">ID Matière</label>
-                        <input type="number" name="id_matiere" class="form-control" id="id_matiere" required>
+                        <label for="id_matiere" class="form-label">Matière</label>
+                        <select name="id_matiere" class="form-control" id="id_matiere" required>
+                            <?php foreach ($matieres as $matiere): ?>
+                                <option value="<?= esc($matiere['id_matiere']) ?>"><?= esc($matiere['intitule']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="col-12">
                         <label for="notes" class="form-label">Notes</label>

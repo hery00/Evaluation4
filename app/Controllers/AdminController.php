@@ -137,7 +137,10 @@ class AdminController extends BaseController
 
     public function addNoteForm()
     {
-        $content =  view('Pages/formulaireNote');
+        
+        $matiereModel = new MatiereModel();
+        $data['matieres'] = $matiereModel->getMatieres();
+        $content =  view('Pages/formulaireNote', $data);
 
         $layout_data = [
             'content' => $content
@@ -151,19 +154,32 @@ class AdminController extends BaseController
     public function addNote()
     {
         
-        $data = [
-            'id_etudiant' => $this->request->getPost('id_etudiant'),
-            'id_matiere' => $this->request->getPost('id_matiere'),
-            'notes' => $this->request->getPost('notes'),
-            'session' => $this->request->getPost('session')
-        ];
+        $etu = $this->request->getPost('etu');
+        $id_matiere = $this->request->getPost('id_matiere');
+        $notes = $this->request->getPost('notes');
+        $session = $this->request->getPost('session');
+
+        $etudiantModel = new EtudiantModel();
+        $etudiant = $etudiantModel->getEtudiantByEtu($etu);
+
+        if ($etudiant) {
+            $id_etudiant = $etudiant['id_etudiant'];
+
+            $noteModel = new NotesModel();
+            $noteData = [
+                'id_etudiant' => $id_etudiant,
+                'id_matiere' => $id_matiere,
+                'notes' => $notes,
+                'session' => $session,
+            ];
 
 
         $noteModel = new NotesModel();
-        if ($noteModel->insertNote($data)) {
+        if ($noteModel->insert($noteData)) {
             return redirect()->to('admin/formulairenote')->with('success', 'Note ajoutée avec succès.');
         } else {
             return redirect()->to('admin/formulairenote')->with('error', 'Erreur lors de l\'ajout de la note.');
         }
+    }
     }
 }
