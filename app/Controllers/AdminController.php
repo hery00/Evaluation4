@@ -180,6 +180,8 @@ class AdminController extends BaseController
         } else {
             return redirect()->to('admin/formulairenote')->with('error', 'Erreur lors de l\'ajout de la note.');
         }
+    } else {
+        return redirect()->to('admin/formulairenote')->with('error', 'ÉTUDIANT introuvable');
     }
-    }
+}
 }

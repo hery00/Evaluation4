@@ -12,8 +12,8 @@
 
                 <form action="<?= base_url('/addnote') ?>" method="post" class="row g-3">
                     <div class="col-12">
-                        <label for="id_etudiant" class="form-label">ETU</label>
-                        <input type="text" name="id_etudiant" class="form-control" id="id_etudiant" required>
+                        <label for="etu" class="form-label">ETU Étudiant</label>
+                        <input type="text" name="etu" class="form-control" id="etu" required>
                     </div>
                     <div class="col-12">
                         <label for="id_matiere" class="form-label">Matière</label>
