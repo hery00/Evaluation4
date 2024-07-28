@@ -57,11 +57,11 @@
                     <?php endif; ?>
                   </div>
 
-                  <form class="row g-3"  method="post" action="<?= base_url('/proprio/login') ?>">
+                  <form class="row g-3"  method="post" action="<?= base_url('/etudiant/login') ?>">
                     <div class="col-12">
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">ETU</span>
-                        <input type="text" name="telephone" class="form-control" id="telephone" required>
+                        <input type="text" name="etu" class="form-control" id="etu" required>
                         <div class="invalid-feedback">Veuillez entrer votre numero ITU</div>
                       </div>
                     </div>

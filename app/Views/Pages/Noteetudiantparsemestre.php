@@ -5,8 +5,21 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Résultats des Notes</h5>
-
+                            <div class="col-lg-6">
+                                <h5 class="card-title">Notes Semestre <?= esc($semestre)?> de l'Étudiant</h5>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p><strong>ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?></p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <p><strong>ETU:</strong> 00<?= esc($etudiant['etu']) ?></p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <p><strong>PROMOTION:</strong> <?= esc($etudiant['nom_promotion']) ?></p>
+                                        </div>
+                                    </div>
+                                
+                            </div>
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>
@@ -34,7 +47,7 @@
                             </table>
                             <!-- End Table with stripped rows -->
                             <h4 class="mt-3">Total Crédits Obtenus: <?= esc($sumCredits) ?></h4>
-                            <h4 class="mt-3">Moyenne Pondérée: <?= esc($moyenne) ?></h4>
+                            <h4 class="mt-3">Moyenne : <?= esc($moyenne) ?></h4>
                         </div>
                     </div>
 

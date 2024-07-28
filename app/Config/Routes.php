@@ -13,7 +13,7 @@ $routes->get('admin/resetables', 'ResetData_Controller::resetdata');
 
 $routes->post('admin/logout', 'AdminController::logout');
 $routes->get('admin/listetudiant', 'AdminController::listetudiant');
-$routes->get('admin/listesemestre', 'AdminController::listesemestre');
+$routes->get('/listesemestre', 'AdminController::listesemestre');
 
 $routes->get('note/semestre', 'NoteController::getnotesemestre');
 

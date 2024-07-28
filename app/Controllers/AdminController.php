@@ -35,12 +35,13 @@ class AdminController extends BaseController
     
         if ($user)
         {
-            if ($user['passe'] === $passe)
+            if ($user['mdp'] === $passe)
             {
                 $session = session();
                 $session->set('id_user', $user['id_admin']);
                 $session->set('nom', $user['nom']);
                 $session->set('login', $user['login']);
+                $session->set('statut', $user['statut']);
 
                 return redirect()->to('admin/listetudiant'); 
                 // echo "tafiditra";
@@ -89,19 +90,37 @@ class AdminController extends BaseController
     
     public function listesemestre()
     {
+        $session = session();
+        $user_statut =  $session->get('statut');
+        $session_etu = $session ->get('etu');
         $model = new EtudiantModel();
         $semestreModel = new SemestreModel();
         $data['semestres'] = $semestreModel->getSemestres();
         $etu = $this->request->getGet('etu');
-        $data['etudiant']=$model->getEtudiantByEtu($etu);
-
+        if($user_statut == 1)
+        {
+            $data['etudiant']=$model->getEtudiantByEtu($etu);
+        }
+        elseif($user_statut == 2)
+        {
+            $data['etudiant'] = $model->getEtudiantByEtu($session_etu);;
+        }
+       
         $content = view('Pages/listeSemestre', $data);
 
         $layout_data = [
             'content' => $content
         ];
-    
-        return view('LayoutAdmin/layout', $layout_data);
+        
+        if($user_statut == 1)
+        {
+            return view('LayoutAdmin/layout', $layout_data);
+        }
+        elseif($user_statut)
+        {
+            return view('LayoutEtudiant/layout', $layout_data);
+        }
+        
     }
 
     public function listeMatiereBySemestre($id_semestre)

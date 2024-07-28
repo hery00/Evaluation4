@@ -192,17 +192,23 @@ class NoteModel extends Model
         $totalNotesPonderees = 0;
         $totalCredits = 0;
     
+        // echo "<pre>";  // Pour afficher le debug dans une format plus lisible
+    
         foreach ($allNotes as $note) {
             if (isset($note['resultat']) && $note['resultat'] !== 'Ajournée' && isset($note['credits']) && isset($note['notes'])) {
                 $pondere = $note['notes'] * $note['credits'];
-                echo "UE: {$note['ue']}, Note: {$note['notes']}, Crédits: {$note['credits']}, Ponderée: {$pondere}\n";
+                // echo "UE: {$note['ue']}, Note: {$note['notes']}, Crédits: {$note['credits']}, Ponderée: {$pondere}\n";
                 $totalNotesPonderees += $pondere;
                 $totalCredits += $note['credits'];
             }
         }
     
+        // echo "Total des notes pondérées: $totalNotesPonderees\n";
+        // echo "Total des crédits: $totalCredits\n";
+        // echo "</pre>";
+    
         // Calculer la moyenne pondérée correctement
-        $moyenne = ($totalCredits > 0) ? $totalNotesPonderees / $totalCredits : 0;
+        $moyenne = ($totalCredits > 0) ? $totalNotesPonderees / 30 : 0;
     
         return round($moyenne, 2);
     }

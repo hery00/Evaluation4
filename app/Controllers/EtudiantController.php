@@ -23,8 +23,12 @@ class EtudiantController extends BaseController
 
         if ($etudiant) {   
             $session = session();
-            $session->set('user', $etudiant);
-            return redirect()->to('/etudiant/listesemestre');
+            $session->set('id_user', $etudiant['id_etudiant']);
+            $session->set('nom', $etudiant['nom']);
+            $session->set('etu', $etudiant['etu']);
+            $session->set('dtn', $etudiant['dtn']);
+            $session->set('statut', $etudiant['statut']);
+            return redirect()->to('/listesemestre');
         } 
         else {
             return redirect()->to('/etudiant')->with('error', 'Votre numero ITU est incorrecte!');
@@ -49,8 +53,8 @@ class EtudiantController extends BaseController
     {
         // Déconnectez l'administrateur en supprimant sa session
         $session = session();
-        $session->remove('proprietaire_id');
-        return redirect()->to('/proprio');
+        $session->destroy();
+        return redirect()->to('/etudiant');
     }
 
 

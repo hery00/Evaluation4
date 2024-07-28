@@ -3,7 +3,8 @@ create table admin
     id_admin serial primary key NOT NULL,
     nom VARCHAR(255),
     login VARCHAR(255),
-    mdp VARCHAR(255)
+    mdp VARCHAR(255),
+    statut int default 1
 );
 
 INSERT INTO admin (nom,login,mdp) VALUES ('Admin', 'admin@gmail.com', '123');
@@ -13,6 +14,7 @@ create table promotion
     id_prom serial primary key NOT NULL,
     nom_promotion VARCHAR(255)
 );
+
 
 INSERT INTO promotion (nom_promotion) VALUES ('P15');
 
@@ -24,6 +26,7 @@ create table etudiant
     nom VARCHAR(255),
     prenom VARCHAR(255),
     dtn DATE,
+    statut int default 2,
     FOREIGN KEY (id_prom) REFERENCES promotion(id_prom)
 );
 
@@ -51,7 +54,6 @@ create table matiere
     credits INTEGER,
     FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre)
 );
-
 
 -- Insertion des matières pour le semestre 1
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES

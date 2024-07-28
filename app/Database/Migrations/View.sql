@@ -6,6 +6,7 @@ SELECT
     e.nom,
     e.prenom,
     e.dtn,
+    e.statut,
     p.nom_promotion
 FROM 
     etudiant e

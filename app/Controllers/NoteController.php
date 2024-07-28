@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\EtudiantModel;
 use App\Models\NoteModel;
 
 
@@ -10,8 +11,24 @@ class NoteController extends BaseController
 {
     public function getNoteSemestre()
     {
+        $session = session();
+        $user_statut =  $session->get('statut');
+        $session_etu = $session ->get('etu');
+
         $id_semestre= $this->request->getGet('id_semestre');
-        $etu= $this->request->getGet('etu');
+         if($user_statut == 1)
+        {
+            $etu= $this->request->getGet('etu');
+        }
+
+        elseif($user_statut == 2)
+        {
+            $etu = $session_etu;
+        }
+        
+        $etudiant_model = new EtudiantModel();
+        $data['semestre'] = $id_semestre;
+        $data['etudiant'] = $etudiant_model->getEtudiantByEtu($etu);
         $model = new NoteModel();
         $data['notes'] = $model->getNoteBySemesterByEtu($id_semestre,$etu);
         $data['sumCredits'] = $model->getSumCredits($data['notes']);
@@ -21,6 +38,13 @@ class NoteController extends BaseController
             'content' => $content
         ];
     
-        return view('LayoutAdmin/layout', $layout_data);
+        if($user_statut == 1)
+        {
+            return view('LayoutAdmin/layout', $layout_data);
+        }
+        elseif($user_statut)
+        {
+            return view('LayoutEtudiant/layout', $layout_data);
+        }
     }
 }

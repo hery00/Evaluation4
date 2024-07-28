@@ -8,7 +8,7 @@ class EtudiantModel extends Model
 {
     protected $table = 'v_etudiant_promotion';
     protected $primaryKey = 'id_etudiant';
-    protected $allowedFields = ['id_prom', 'etu', 'nom', 'prenom', 'dtn','nom_promotion'];
+    protected $allowedFields = ['id_prom', 'etu', 'nom', 'prenom', 'dtn','nom_promotion','statut'];
     protected $useTimestamps = false;
 
     public function getAllEtudiant()
