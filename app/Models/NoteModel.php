@@ -31,6 +31,9 @@ class NoteModel extends Model
                         ->where('etu', $etu)
                         ->findAll();
 
+        // Prendre la note maximale pour chaque matière
+        $allNotes = $this->filterMaxNotesBySubject($allNotes);
+
         // Initialize arrays for different conditions
         $inf10 = [];
         $sup6 = [];
@@ -100,56 +103,68 @@ class NoteModel extends Model
     }
 
     private function filterMaxOptionalNotes($notes)
-{
-    $groupedNotes = [];
-    $groups = $this->getOptionalGroups();
+    {
+        $groupedNotes = [];
+        $groups = $this->getOptionalGroups();
 
-    // Process each group to find the max note
-    foreach ($groups as $group) {
-        $optionalNotes = [];
+        // Process each group to find the max note
+        foreach ($groups as $group) {
+            $optionalNotes = [];
 
-        // Collect notes that belong to the current group
-        foreach ($notes as $note) {
-            if (in_array($note['ue'], $group)) {
-                $optionalNotes[] = $note;
+            // Collect notes that belong to the current group
+            foreach ($notes as $note) {
+                if (in_array($note['ue'], $group)) {
+                    $optionalNotes[] = $note;
+                }
             }
-        }
 
-        // Find and add the note with the maximum score in the current group
-        if (!empty($optionalNotes)) {
-            $maxNote = max(array_column($optionalNotes, 'notes'));
-            foreach ($optionalNotes as $note) {
-                if ($note['notes'] == $maxNote) {
-                    // Add formatted note to groupedNotes
-                    $groupedNotes[] = [
-                        'ue' => $note['ue'],
-                        'intitule_matiere' => $note['intitule_matiere'],
-                        'credits' => $note['credits'],
-                        'notes' => $note['notes'],
-                        'resultat' => $this->classifyNote($note['notes']),
-                        'session' => $note['session']
-                    ];
-                    break; 
+            // Find and add the note with the maximum score in the current group
+            if (!empty($optionalNotes)) {
+                $maxNote = max(array_column($optionalNotes, 'notes'));
+                foreach ($optionalNotes as $note) {
+                    if ($note['notes'] == $maxNote) {
+                        // Add formatted note to groupedNotes
+                        $groupedNotes[] = [
+                            'ue' => $note['ue'],
+                            'intitule_matiere' => $note['intitule_matiere'],
+                            'credits' => $note['credits'],
+                            'notes' => $note['notes'],
+                            'resultat' => $this->classifyNote($note['notes']),
+                            'session' => $note['session']
+                        ];
+                        break; 
+                    }
                 }
             }
         }
-    }
-    
-    foreach ($notes as $note) {
-        if (!in_array($note['ue'], array_merge(...$groups))) {
-            $groupedNotes[] = [
-                'ue' => $note['ue'],
-                'intitule_matiere' => $note['intitule_matiere'],
-                'credits' => $note['credits'],
-                'notes' => $note['notes'],
-                'resultat' => $this->classifyNote($note['notes']),
-                'session' => $note['session']
-            ];
+        
+        foreach ($notes as $note) {
+            if (!in_array($note['ue'], array_merge(...$groups))) {
+                $groupedNotes[] = [
+                    'ue' => $note['ue'],
+                    'intitule_matiere' => $note['intitule_matiere'],
+                    'credits' => $note['credits'],
+                    'notes' => $note['notes'],
+                    'resultat' => $this->classifyNote($note['notes']),
+                    'session' => $note['session']
+                ];
+            }
         }
+
+        return $groupedNotes;
     }
 
-    return $groupedNotes;
-}
+    private function filterMaxNotesBySubject($notes)
+    {
+        $maxNotes = [];
+        foreach ($notes as $note) {
+            $key = $note['id_matiere'];
+            if (!isset($maxNotes[$key]) || $note['notes'] > $maxNotes[$key]['notes']) {
+                $maxNotes[$key] = $note;
+            }
+        }
+        return array_values($maxNotes);
+    }
 
     private function getOptionalGroups()
     {
@@ -159,6 +174,7 @@ class NoteModel extends Model
             ['INF302', 'INF303']
         ];
     }
+
     private function classifyNote($noteValue)
     {
         if ($noteValue >= 16) {
@@ -186,7 +202,6 @@ class NoteModel extends Model
         return $sumCredits;
     }
 
-
     public function getMoyenne($allNotes)
     {
         $totalNotesPonderees = 0;
@@ -212,12 +227,7 @@ class NoteModel extends Model
     
         return round($moyenne, 2);
     }
-    
-    
-
-
-
-
-
-
 }
+
+    
+    
