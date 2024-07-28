@@ -15,6 +15,8 @@ $routes->post('admin/logout', 'AdminController::logout');
 $routes->get('admin/listetudiant', 'AdminController::listetudiant');
 $routes->get('admin/listesemestre', 'AdminController::listesemestre');
 
+$routes->get('note/semestre', 'NoteController::getnotesemestre');
+
 $routes->get('admin/import','ImportController::index');
 $routes->post('importcsv', 'ImportController::importcsv');
 

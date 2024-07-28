@@ -11,13 +11,15 @@ class MatiereModel extends Model
     protected $allowedFields = ['id_semestre','ue','intitule','credits'];
 
     public function getMatieres()
-    {
-        return $this->findAll(); 
+    { 
+             return $this->findAll(); 
     }
 
     public function getMatieresBySemestre($id_semestre)
     {
         return $this->where('id_semestre', $id_semestre)->findAll();
     }
+
+    
 }
    

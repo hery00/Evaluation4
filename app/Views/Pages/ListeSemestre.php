@@ -32,7 +32,7 @@
                                         <td style="text-align:center"><strong>Semestre</strong></td>
                                         <?php foreach ($semestres as $semestre): ?>
                                             <td style="text-align:center">
-                                                <a class="btn btn-primary" href="<?= base_url('admin/listesemestre')?>?etu=<?= esc($etudiant['etu']); ?>">Voir resultat <?= esc($semestre['nom_semestre']) ?></a>
+                                                <a class="btn btn-primary" href="<?= base_url('note/semestre')?>?etu=<?= esc($etudiant['etu']); ?>&id_semestre=<?= esc($semestre['id_semestre']) ?>">Voir resultat <?= esc($semestre['nom_semestre']) ?></a>
                                             </td>
                                         <?php endforeach; ?>
                                     <?php else: ?>
