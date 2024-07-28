@@ -14,6 +14,8 @@ class NoteController extends BaseController
         $etu= $this->request->getGet('etu');
         $model = new NoteModel();
         $data['notes'] = $model->getNoteBySemesterByEtu($id_semestre,$etu);
+        $data['sumCredits'] = $model->getSumCredits($data['notes']);
+        $data['moyenne'] = $model->getMoyenne($data['notes']);
         $content = view('Pages/noteetudiantparsemestre', $data);
         $layout_data = [
             'content' => $content

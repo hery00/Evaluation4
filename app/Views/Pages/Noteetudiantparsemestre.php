@@ -25,7 +25,7 @@
                                             <td><?= esc($note['ue']) ?></td>
                                             <td><?= esc($note['intitule_matiere']) ?></td>
                                             <td><?= esc($note['credits']) ?></td>
-                                            <td><?= number_format($note['notes'], 1) ?></td>
+                                            <td><?= number_format($note['notes'], 2) ?></td>
                                             <td><?= esc($note['resultat']) ?></td>
                                             <td><?= esc($note['session']) ?></td>
                                         </tr>
@@ -33,7 +33,8 @@
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
-
+                            <h4 class="mt-3">Total Crédits Obtenus: <?= esc($sumCredits) ?></h4>
+                            <h4 class="mt-3">Moyenne Pondérée: <?= esc($moyenne) ?></h4>
                         </div>
                     </div>
 
