@@ -6,16 +6,16 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="col-lg-6">
-                                <h5 class="card-title">Notes Semestre <?= esc($semestre)?> de l'Étudiant</h5>
+                                <h5 style="font-weight:bold;color:#283a97;" class="card-title">NOTES SEMESTRE <?= esc($semestre)?> DE L'ETUDIANT</h5>
                                     <div class="row">
                                         <div class="col-lg-4">
-                                            <p><strong>ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?></p>
+                                            <p><strong style="color:#283a97;">ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?></p>
                                         </div>
                                         <div class="col-lg-4">
-                                            <p><strong>ETU:</strong> 00<?= esc($etudiant['etu']) ?></p>
+                                            <p><strong style="color:#283a97;">ETU:</strong> 00<?= esc($etudiant['etu']) ?></p>
                                         </div>
                                         <div class="col-lg-4">
-                                            <p><strong>PROMOTION:</strong> <?= esc($etudiant['nom_promotion']) ?></p>
+                                            <p><strong style="color:#283a97;">PROMOTION:</strong> <?= esc($etudiant['nom_promotion']) ?></p>
                                         </div>
                                     </div>
                                 
@@ -24,12 +24,12 @@
                             <table class="table datatable">
                                 <thead>
                                     <tr>
-                                        <th>UE</th>
-                                        <th>Intitulé</th>
-                                        <th>Crédits</th>
-                                        <th>Note/20</th>
-                                        <th>Résultat</th>
-                                        <th>Session</th>
+                                        <th style="background-color:#283a97;color:#d0dce7">UE</th>
+                                        <th style="background-color:#283a97;color:#d0dce7">Intitulé</th>
+                                        <th style="background-color:#283a97;color:#d0dce7">Crédits</th>
+                                        <th style="background-color:#283a97;color:#d0dce7">Note/20</th>
+                                        <th style="background-color:#283a97;color:#d0dce7">Résultat</th>
+                                        <th style="background-color:#283a97;color:#d0dce7">Session</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,8 +46,13 @@
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
-                            <h4 class="mt-3">Total Crédits Obtenus: <?= esc($sumCredits) ?></h4>
-                            <h4 class="mt-3">Moyenne : <?= esc($moyenne) ?></h4>
+                            <h4 style="font-weight:bold;color:#283a97;" class="mt-3">Total Crédits Obtenus: <?= esc($sumCredits) ?></h4>
+                            <h4 class="mt-3" style="color: <?= esc($Color) ?>; font-weight: bold;">
+                                mention : <?= esc($mention) ?>
+                            </h4>
+                            <h4 class="mt-3" style="color: <?= esc($Color) ?>; font-weight: bold;">
+                                Moyenne : <?= esc($moyenne) ?>
+                            </h4>
                         </div>
                     </div>
 

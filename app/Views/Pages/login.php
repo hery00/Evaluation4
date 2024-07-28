@@ -5,13 +5,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Login</title>
+  <title>Administrateur ITUniversity</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="<?= base_url()?>assets/img/logo_icon/icon2.png" rel="icon">
-  <link href="<?= base_url()?>assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link sizes="16x16" type="image/png" href="<?= base_url('assets/img/logo_icon.png')?>" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -49,8 +48,7 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Se connecter</h5>
-                    <p class="text-center small">Entrer vos e-mail et mot de passe</p>
+                  <center><img style="max-width: 300px;max-height:139,7px;margin-bottom:50px;" src="<?= base_url('assets/img/logo2.png') ?>" alt="logo"></center>
                     <?php if (session()->has('error')) : ?>
                       <div><?= session('error') ?></div>
                     <?php endif; ?>
@@ -72,7 +70,7 @@
                       <div class="invalid-feedback">Veuillez entrer votre mot de passe</div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Se connecter</button>
+                      <button style="background-color:#536ae4;" class="btn btn-primary w-100" type="submit">Se connecter</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Vous n'avez pas encore de compte?<a href="<?= base_url('/inscrir') ?>">S'inscrir</a></p>

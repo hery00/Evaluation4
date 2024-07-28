@@ -33,6 +33,18 @@ class NoteController extends BaseController
         $data['notes'] = $model->getNoteBySemesterByEtu($id_semestre,$etu);
         $data['sumCredits'] = $model->getSumCredits($data['notes']);
         $data['moyenne'] = $model->getMoyenne($data['notes']);
+
+
+        if ($data['moyenne'] < 10) {
+            $data['Color'] = '#fd3022';
+            $data['mention'] = "Ajournée";
+        } elseif ($data['moyenne'] >= 10 && $data['moyenne']< 15) {
+            $data['Color'] = '#283a97';
+            $data['mention'] = "Bien"; 
+        } elseif ($data['moyenne'] >= 15) {
+            $data['Color'] = '#b2d235'; 
+            $data['mention'] = "Très Bien";
+        }
         $content = view('Pages/noteetudiantparsemestre', $data);
         $layout_data = [
             'content' => $content

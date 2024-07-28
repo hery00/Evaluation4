@@ -1,8 +1,8 @@
-<aside id="sidebar" class="sidebar">
+<aside style="background-color:#536ae4; " id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
             <a class="nav-link " href="<?= base_url('admin/listetudiant') ?>">
-                <i class="bi bi-grid"></i>
+            <img style="max-width: 20px;" src="<?= base_url('assets/icons/PNG/ITU_icon_4.png')?>" alt="icons">
                 <span>Liste des Etudiants</span>
             </a>
         </li>
@@ -14,21 +14,21 @@
         </li>
         <li class="nav-item">
         <a class="nav-link " href="<?= base_url('admin/import') ?>">
-            <i class="bi bi-menu-button-wide"></i>
+        <img style="max-width: 20px;" src="<?= base_url('assets/icons/PNG/ITU_icon_4.png')?>" alt="icons">
             <span>Import de données</span>
         </a>
         </li>
         <li class="nav-item">
             <center> 
                 <form action="<?= base_url('admin/resetables') ?>" method="get">
-                    <button type="submit" class="btn btn-primary">Réinitialiser la base</button>
+                    <button style="background-color: #b2d235;color:#283a97;" type="submit" class="btn btn-primary">Réinitialiser la base</button>
                 </form>
             </center>
         </li>
         <li class="nav-item">
             <center> 
                 <form action="<?= site_url('admin/logout') ?>" method="post">
-                    <button type="submit" class="btn btn-primary">Logout</button>
+                    <button style="background-color:#ff4336;" type="submit" class="btn btn-primary">Logout</button>
                 </form>
             </center>
         </li>

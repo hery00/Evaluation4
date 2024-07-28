@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-6"><br/><br/><h5 class="card-title">LISTE DES ÉTUDIANTS</h5></div>
+                            <div class="col-lg-6"><h5 style="font-weight:bold;color:#283a97;" class="card-title">LISTE DES ÉTUDIANTS</h5></div>
                             <div class="col-lg-6">
                             </div>  
                         </div>

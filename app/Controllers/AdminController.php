@@ -150,12 +150,14 @@ class AdminController extends BaseController
 
     public function addNote()
     {
+        
         $data = [
             'id_etudiant' => $this->request->getPost('id_etudiant'),
             'id_matiere' => $this->request->getPost('id_matiere'),
             'notes' => $this->request->getPost('notes'),
             'session' => $this->request->getPost('session')
         ];
+
 
         $noteModel = new NotesModel();
         if ($noteModel->insertNote($data)) {

@@ -15,7 +15,7 @@
 
 body {
   font-family: "fractul-alt";
-  background: #f6f9ff;
+  background:#d0dce7;
   color: #444444;
 }
 
@@ -35,7 +35,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Nunito", sans-serif;
+  font-family: "fractul-alt";
 }
 
 /*--------------------------------------------------------------
@@ -234,10 +234,10 @@ h6 {
 
 .card-title {
   padding: 20px 0 15px 0;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 500;
-  color: #012970;
-  font-family: "Poppins", sans-serif;
+  color:#283a97;
+  font-family: "fractul-alt";
 }
 
 .card-title span {
@@ -257,7 +257,7 @@ h6 {
 /* Alerts */
 .alert-heading {
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
+  font-family: "fractul-alt";
   font-size: 20px;
 }
 
@@ -306,7 +306,7 @@ h6 {
 /* Breadcrumbs */
 .breadcrumb {
   font-size: 14px;
-  font-family: "Nunito", sans-serif;
+  font-family: "fractul-alt";
   color: #899bbd;
   font-weight: 600;
 }
@@ -373,7 +373,7 @@ h6 {
   font-size: 26px;
   font-weight: 700;
   color: #012970;
-  font-family: "Nunito", sans-serif;
+  font-family: "fractul-alt";
 }
 
 .header {
