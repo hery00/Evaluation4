@@ -31,12 +31,8 @@ class NoteModel extends Model
                         ->where('etu', $etu)
                         ->findAll();
 
-        // Prendre la note maximale pour chaque matière
-        $allNotes = $this->filterMaxNotesBySubject($allNotes);
-
         // Initialize arrays for different conditions
         $inf10 = [];
-        $sup6 = [];
         $inf6 = [];
 
         // Populate arrays based on note conditions
@@ -56,102 +52,36 @@ class NoteModel extends Model
         foreach ($allNotes as &$n) {
             $noteValue = $n['notes'];
 
-            if($nb_inf10<=2)
-            {
-                if($nb_inf6==0)
-                {
-                    if($noteValue<10)
-                    {
+            if ($nb_inf10 <= 2) {
+                if ($nb_inf6 == 0) {
+                    if ($noteValue < 10) {
                         $n['resultat'] = 'Compensée';
-                    }
-                    else{
+                    } else {
                         $n['resultat'] = $this->classifyNote($noteValue);
-                    }  
-                }
-
-                elseif($nb_inf6>0)
-                {
-                    if($noteValue<10)
-                    {
+                    }
+                } elseif ($nb_inf6 > 0) {
+                    if ($noteValue < 10) {
                         $n['resultat'] = 'Ajournée';
                         $n['credits'] = 0;
-                    }
-                    else{
+                    } else {
                         $n['resultat'] = $this->classifyNote($noteValue);
-                    }  
-                } 
-            }
-            elseif($nb_inf10>2)
-            {
-                if($noteValue<10)
-                {
+                    }
+                }
+            } elseif ($nb_inf10 > 2) {
+                if ($noteValue < 10) {
                     $n['resultat'] = 'Ajournée';
                     $n['credits'] = 0;
-                }
-                else {
+                } else {
                     $n['resultat'] = $this->classifyNote($noteValue);
                 }
-                
-            }
-             else {
+            } else {
                 $n['resultat'] = $this->classifyNote($noteValue);
             }
         }
 
+        $allNotes = $this->filterMaxNotesBySubject($allNotes);
         $filteredNotes = $this->filterMaxOptionalNotes($allNotes);
         return $filteredNotes;
-    }
-
-    private function filterMaxOptionalNotes($notes)
-    {
-        $groupedNotes = [];
-        $groups = $this->getOptionalGroups();
-
-        // Process each group to find the max note
-        foreach ($groups as $group) {
-            $optionalNotes = [];
-
-            // Collect notes that belong to the current group
-            foreach ($notes as $note) {
-                if (in_array($note['ue'], $group)) {
-                    $optionalNotes[] = $note;
-                }
-            }
-
-            // Find and add the note with the maximum score in the current group
-            if (!empty($optionalNotes)) {
-                $maxNote = max(array_column($optionalNotes, 'notes'));
-                foreach ($optionalNotes as $note) {
-                    if ($note['notes'] == $maxNote) {
-                        // Add formatted note to groupedNotes
-                        $groupedNotes[] = [
-                            'ue' => $note['ue'],
-                            'intitule_matiere' => $note['intitule_matiere'],
-                            'credits' => $note['credits'],
-                            'notes' => $note['notes'],
-                            'resultat' => $this->classifyNote($note['notes']),
-                            'session' => $note['session']
-                        ];
-                        break; 
-                    }
-                }
-            }
-        }
-        
-        foreach ($notes as $note) {
-            if (!in_array($note['ue'], array_merge(...$groups))) {
-                $groupedNotes[] = [
-                    'ue' => $note['ue'],
-                    'intitule_matiere' => $note['intitule_matiere'],
-                    'credits' => $note['credits'],
-                    'notes' => $note['notes'],
-                    'resultat' => $this->classifyNote($note['notes']),
-                    'session' => $note['session']
-                ];
-            }
-        }
-
-        return $groupedNotes;
     }
 
     private function filterMaxNotesBySubject($notes)
@@ -164,6 +94,39 @@ class NoteModel extends Model
             }
         }
         return array_values($maxNotes);
+    }
+
+    private function filterMaxOptionalNotes($notes)
+    {
+        $groupedNotes = [];
+        $groups = $this->getOptionalGroups();
+
+        foreach ($groups as $group) {
+            $optionalNotes = [];
+            foreach ($notes as $note) {
+                if (in_array($note['ue'], $group)) {
+                    $optionalNotes[] = $note;
+                }
+            }
+
+            if (!empty($optionalNotes)) {
+                $maxNote = max(array_column($optionalNotes, 'notes'));
+                foreach ($optionalNotes as $note) {
+                    if ($note['notes'] == $maxNote) {
+                        $groupedNotes[] = $note;
+                        break; 
+                    }
+                }
+            }
+        }
+        
+        foreach ($notes as $note) {
+            if (!in_array($note['ue'], array_merge(...$groups))) {
+                $groupedNotes[] = $note;
+            }
+        }
+
+        return $groupedNotes;
     }
 
     private function getOptionalGroups()
@@ -206,28 +169,17 @@ class NoteModel extends Model
     {
         $totalNotesPonderees = 0;
         $totalCredits = 0;
-    
-        // echo "<pre>";  // Pour afficher le debug dans une format plus lisible
-    
+
         foreach ($allNotes as $note) {
             if (isset($note['resultat']) && $note['resultat'] !== 'Ajournée' && isset($note['credits']) && isset($note['notes'])) {
                 $pondere = $note['notes'] * $note['credits'];
-                // echo "UE: {$note['ue']}, Note: {$note['notes']}, Crédits: {$note['credits']}, Ponderée: {$pondere}\n";
                 $totalNotesPonderees += $pondere;
                 $totalCredits += $note['credits'];
             }
         }
-    
-        // echo "Total des notes pondérées: $totalNotesPonderees\n";
-        // echo "Total des crédits: $totalCredits\n";
-        // echo "</pre>";
-    
-        // Calculer la moyenne pondérée correctement
+
         $moyenne = ($totalCredits > 0) ? $totalNotesPonderees / 30 : 0;
-    
+
         return round($moyenne, 2);
     }
 }
-
-    
-    
