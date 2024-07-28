@@ -20,6 +20,7 @@
                         <div class="col-12">
                             <label for="id_matiere" class="form-label">Matière</label>
                             <select name="id_matiere" class="form-control" id="id_matiere" required>
+                            <option value="">Chosir la matiere</option>
                                 <?php foreach ($matieres as $matiere): ?>
                                     <option value="<?= esc($matiere['id_matiere']) ?>"><?= esc($matiere['intitule']) ?></option>
                                 <?php endforeach; ?>
