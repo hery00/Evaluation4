@@ -8,13 +8,13 @@
                             <div class="col-lg-6">
                                 <h5 style="font-weight:bold;color:#283a97;" class="card-title">LISTE DES SEMESTRES</h5>
                                     <div class="row">
-                                        <div class="col-lg-4">
-                                            <p><strong style="color:#283a97;">ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?></p>
+                                        <div class="col-lg-6">
+                                            <p><strong style="color:#283a97;">ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?> <?= esc($etudiant['prenom']) ?></p>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <p><strong style="color:#283a97;">ETU:</strong> 00<?= esc($etudiant['etu']) ?></p>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <p><strong style="color:#283a97;">PROMOTION:</strong> <?= esc($etudiant['nom_promotion']) ?></p>
                                         </div>
                                     </div>

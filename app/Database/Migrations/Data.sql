@@ -17,6 +17,8 @@ create table promotion
 
 
 INSERT INTO promotion (nom_promotion) VALUES ('P15');
+INSERT INTO promotion (nom_promotion) VALUES ('P16');
+INSERT INTO promotion (nom_promotion) VALUES ('P17');
 
 create table etudiant 
 (
@@ -31,6 +33,7 @@ create table etudiant
 );
 
 INSERT INTO etudiant (id_prom, etu, nom, prenom, dtn) VALUES (1,1610,'Rakoto','Jean','10-02-1997');
+INSERT INTO etudiant (id_prom, etu, nom, prenom, dtn) VALUES (2,2112,'Randrianarisoa','Cedric','23-09-2003');
 
 create table semestre 
 (
@@ -57,60 +60,61 @@ create table matiere
 
 -- Insertion des matières pour le semestre 1
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
-(1, 'INF101', 'Programmation procédurale', 7),
+(1, 'INF101', 'Programmation procedurale', 7),
 (1, 'INF104', 'HTML et Introduction au Web', 5),
 (1, 'INF107', 'Informatique de Base', 4),
-(1, 'MTH101', 'Arithmétique et nombres', 4),
-(1, 'MTH102', 'Analyse mathématique', 6),
+(1, 'MTH101', 'Arithmetique et nombres', 4),
+(1, 'MTH102', 'Analyse mathematique', 6),
 (1, 'ORG101', 'Techniques de communication', 4);
 
--- Insertion des matières pour le semestre 2
+-- Insertion des matieres pour le semestre 2
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
-(2, 'INF102', 'Bases de données relationnelles', 5),
-(2, 'INF103', 'Bases de l''administration système', 5),
-(2, 'INF105', 'Maintenance matériel et logiciel', 4),
-(2, 'INF106', 'Compléments de programmation', 6),
+(2, 'INF102', 'Bases de donnees relationnelles', 5),
+(2, 'INF103', 'Bases de l''administration systeme', 5),
+(2, 'INF105', 'Maintenance materiel et logiciel', 4),
+(2, 'INF106', 'Complements de programmation', 6),
 (2, 'MTH103', 'Calcul Vectoriel et Matriciel', 6),
-(2, 'MTH105', 'Probabilité et Statistique', 4);
+(2, 'MTH105', 'Probabilite et Statistique', 4);
 
--- Insertion des matières pour le semestre 3
+-- Insertion des matieres pour le semestre 3
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
-(3, 'INF201', 'Programmation orientée objet', 6),
-(3, 'INF202', 'Bases de données objets', 6),
-(3, 'INF203', 'Programmation système', 4),
-(3, 'INF208', 'Réseaux informatiques', 6),
-(3, 'MTH201', 'Méthodes numériques', 4),
+(3, 'INF201', 'Programmation orientee objet', 6),
+(3, 'INF202', 'Bases de donnees objets', 6),
+(3, 'INF203', 'Programmation systeme', 4),
+(3, 'INF208', 'Reseaux informatiques', 6),
+(3, 'MTH201', 'Methodes numeriques', 4),
 (3, 'ORG201', 'Bases de gestion', 4);
 
--- Insertion des matières pour le semestre 4 (Parcours : Développement)
+-- Insertion des matieres pour le semestre 4 (Parcours : Developpement)
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
-(4, 'INF204', 'Système d''information géographique', 6),
-(4, 'INF205', 'Système d''information', 6),
+(4, 'INF204', 'Systeme d''information geographique', 6),
+(4, 'INF205', 'Systeme d''information', 6),
 (4, 'INF206', 'Interface Homme/Machine', 6),
-(4, 'INF207', 'Eléments d''algorithmique', 6),
-(4, 'INF210', 'Mini-projet de développement', 10),
-(4, 'MTH204', 'Géométrie', 4),
-(4, 'MTH205', 'Equations différentielles', 4),
+(4, 'INF207', 'Elements d''algorithmique', 6),
+(4, 'INF210', 'Mini-projet de developpement', 10),
+(4, 'MTH204', 'Geometrie', 4),
+(4, 'MTH205', 'Equations differentielles', 4),
 (4, 'MTH206', 'Optimisation', 4),
 (4, 'MTH203', 'MAO', 4);
 
--- Insertion des matières pour le semestre 5 (Parcours : Développement)
+-- Insertion des matieres pour le semestre 5 (Parcours : Developpement)
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 (5, 'INF301', 'Architecture logicielle', 6),
-(5, 'INF304', 'Développement pour mobiles', 6),
-(5, 'INF307', 'Conception en modèle orienté objet', 6),
+(5, 'INF304', 'Developpement pour mobiles', 6),
+(5, 'INF307', 'Conception en modele oriente objet', 6),
 (5, 'ORG301', 'Gestion d''entreprise', 5),
 (5, 'ORG302', 'Gestion de projets', 4),
 (5, 'ORG303', 'Anglais pour les affaires', 3);
 
--- Insertion des matières pour le semestre 6 (Parcours : Développement)
+-- Insertion des matieres pour le semestre 6 (Parcours : Developpement)
 INSERT INTO matiere (id_semestre, UE, intitule, credits) VALUES
 (6, 'INF310', 'Codage', 4),
-(6, 'INF313', 'Programmation avancée, frameworks', 6),
-(6, 'INF302', 'Technologies d''accès aux réseaux', 6),
-(6, 'INF303', 'Multimédia', 6),
-(6, 'INF316', 'Projet de développement', 10),
+(6, 'INF313', 'Programmation avancee, frameworks', 6),
+(6, 'INF302', 'Technologies d''acces aux reseaux', 6),
+(6, 'INF303', 'Multimedia', 6),
+(6, 'INF316', 'Projet de developpement', 10),
 (6, 'ORG304', 'Communication d''entreprise', 4);
+
 
 create table notes
 (
@@ -189,4 +193,69 @@ VALUES
     (1, 37, 17.00, '2024-07-10'),
     (1, 38, 18.00, '2024-07-10'), 
     (1, 39, 15.00, '2024-07-10');
+
+
+-- Insertion de notes pour l'étudiant avec id_etudiant = 2 pour le semestre 1
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (2, 1, 12.00, '2024-06-15'),
+    (2, 2, 14.50, '2024-06-15'),
+    (2, 3, 10.75, '2024-06-15'),
+    (2, 4, 0, '2024-06-15'),
+    (2, 5, 15.00, '2024-06-15'),
+    (2, 6, 17.50, '2024-06-15');
+
+-- Insertion de notes pour l'étudiant avec id_etudiant = 2 pour le semestre 2
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (2, 7, 10.00, '2024-07-10'), 
+    (2, 8, 11.00, '2024-07-10'),
+    (2, 9, 8.00, '2024-07-10'),
+    (2, 10, 5.00, '2024-07-10'),
+    (2, 11, 16.00, '2024-07-10'),
+    (2, 12, 14.00, '2024-07-10');
+
+-- Insertion de notes pour l'étudiant avec id_etudiant = 2 pour le semestre 3
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (2, 13, 14.00, '2024-07-10'), 
+    (2, 14, 6.00, '2024-07-10'), 
+    (2, 15, 8.50, '2024-07-10'),
+    (2, 16, 16.00, '2024-07-10'),
+    (2, 17, 15.50, '2024-07-10'),
+    (2, 18, 13.00, '2024-07-10');
+
+-- Insérer les notes pour l'étudiant avec id_etudiant = 2 pour le semestre 4
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (2, 19, 13.50, '2024-07-10'),
+    (2, 20, 12.75, '2024-07-10'),
+    (2, 21, 14.00, '2024-07-10'),
+    (2, 22, 15.00, '2024-07-10'),
+    (2, 23, 17.00, '2024-07-10'),
+    (2, 24, 14.50, '2024-07-10'),
+    (2, 25, 13.00, '2024-07-10'),
+    (2, 26, 15.00, '2024-07-10'),
+    (2, 27, 14.00, '2024-07-10');
+
+-- Insérer les notes pour l'étudiant avec id_etudiant = 2 pour le semestre 5
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (2, 28, 9.00, '2024-07-10'),
+    (2, 29, 9.50, '2024-07-10'), 
+    (2, 30, 8.00, '2024-07-10'), 
+    (2, 31, 13.00, '2024-07-10'), 
+    (2, 32, 14.00, '2024-07-10'),
+    (2, 33, 13.50, '2024-07-10');
+
+-- Insérer les notes pour l'étudiant avec id_etudiant = 2 pour le semestre 6
+INSERT INTO notes (id_etudiant, id_matiere, notes, session)
+VALUES
+    (2, 34, 7.00, '2024-07-10'),  
+    (2, 35, 8.00, '2024-07-10'),  
+    (2, 36, 13.00, '2024-07-10'),
+    (2, 37, 16.00, '2024-07-10'),
+    (2, 38, 15.00, '2024-07-10'), 
+    (2, 39, 14.00, '2024-07-10');
+
 

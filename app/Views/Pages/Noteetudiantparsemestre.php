@@ -9,7 +9,7 @@
                                 <h5 style="font-weight:bold;color:#283a97;" class="card-title">NOTES SEMESTRE <?= esc($semestre)?> DE L'ETUDIANT</h5>
                                     <div class="row">
                                         <div class="col-lg-4">
-                                            <p><strong style="color:#283a97;">ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?></p>
+                                            <p><strong style="color:#283a97;">ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?> <?= esc($etudiant['prenom']) ?> </p>
                                         </div>
                                         <div class="col-lg-4">
                                             <p><strong style="color:#283a97;">ETU:</strong> 00<?= esc($etudiant['etu']) ?></p>
@@ -24,12 +24,12 @@
                             <table class="table datatable">
                                 <thead>
                                     <tr>
-                                        <th style="background-color:#283a97;color:#d0dce7">UE</th>
-                                        <th style="background-color:#283a97;color:#d0dce7">Intitulé</th>
-                                        <th style="background-color:#283a97;color:#d0dce7">Crédits</th>
-                                        <th style="background-color:#283a97;color:#d0dce7">Note/20</th>
-                                        <th style="background-color:#283a97;color:#d0dce7">Résultat</th>
-                                        <th style="background-color:#283a97;color:#d0dce7">Session</th>
+                                        <th>UE</th>
+                                        <th>Intitulé</th>
+                                        <th>Crédits</th>
+                                        <th>Note/20</th>
+                                        <th>Résultat</th>
+                                        <th>Session</th>
                                     </tr>
                                 </thead>
                                 <tbody>

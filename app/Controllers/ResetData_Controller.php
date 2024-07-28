@@ -19,7 +19,7 @@ class ResetData_Controller extends BaseController
         // Exécutez la réinitialisation des données
         $dbResetService->resetData();
         $data = [
-            'content' => view('Pages/import')
+            'content' => view('Pages/listeEtudiant')
         ];
         return view('LayoutAdmin/layout',$data);
     
