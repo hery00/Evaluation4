@@ -19,7 +19,6 @@ ON
 
 CREATE VIEW v_notes_details AS
 SELECT 
-    n.id_note,
     e.id_etudiant,
     e.etu,
     e.nom AS nom_etudiant,
@@ -31,14 +30,14 @@ SELECT
     s.id_semestre,
     s.nom_semestre,
     p.nom_promotion,
-    n.notes,
-    n.session
+    nr.notes,
+    nr.session
 FROM 
-    notes n
+    v_notes_reels nr
 JOIN 
-    etudiant e ON n.id_etudiant = e.id_etudiant
+    etudiant e ON nr.id_etudiant = e.id_etudiant
 JOIN 
-    matiere m ON n.id_matiere = m.id_matiere
+    matiere m ON nr.id_matiere = m.id_matiere
 JOIN 
     semestre s ON m.id_semestre = s.id_semestre
 JOIN
@@ -50,5 +49,5 @@ CREATE VIEW v_moyenne AS
 SELECT ROUND((SUM(credits * notes)) / SUM(credits), 2) AS moyenne_ponderee
 FROM v_notes_details;
 
-
-select id_etudiant,id_matiere,0 from etudiant,matiere;
+create or replace view v_notes_reels as
+select id_etudiant,id_matiere,0 as notes,current_date as session from etudiant,matiere union select id_etudiant,id_matiere,notes,session from notes;

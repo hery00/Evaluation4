@@ -7,9 +7,7 @@ use CodeIgniter\Model;
 class NoteModel extends Model
 {
     protected $table = 'v_notes_details';
-    protected $primaryKey = 'id_note';
     protected $allowedFields = [
-        'id_note',
         'id_etudiant',
         'etu',
         'nom_etudiant',
