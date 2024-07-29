@@ -3,12 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\LocationDetailModel;
 use App\Models\ImportModel;
-use App\Models\LocationModel;
-use App\Models\ImportBienModel;
-use App\Models\ImportLocationModel;
-use App\Models\ImportCommissionModel;
+use App\Models\ImportNoteModel;
+use App\Models\ImportConfigNoteModel;
 use CodeIgniter\Files\File;
 
 class ImportController extends BaseController
@@ -25,81 +22,63 @@ class ImportController extends BaseController
     {
         helper(['form', 'url']);
         $importModel = new ImportModel();
-        $locationModel = new LocationModel();
-        $LocationDetailModel = new LocationDetailModel();
         
-        $file = $this->request->getFile('bien');
+        $file = $this->request->getFile('config_note');
         $cheminTemporaire = $file->getTempName();
-
-        $file2 = $this->request->getFile('location');
+        
+        $file2 = $this->request->getFile('note');
         $cheminTemporaire2 = $file2->getTempName();
-
-        $file3 = $this->request->getFile('commission');
-        $cheminTemporaire3 = $file3->getTempName();
 
         $tab1 = $importModel -> import_csv($cheminTemporaire);
         $tab2 = $importModel -> import_csv($cheminTemporaire2);
-        $tab3 = $importModel -> import_csv($cheminTemporaire3);
 
-        $bienmodel = new ImportBienModel();
 
         for ($i = 1; $i < count($tab1); $i++) 
         {
+            $ConfigNote = new ImportConfigNoteModel();
 
-            $reference = $tab1[$i][0];
-            $nom = $tab1[$i][1];
-            $description = $tab1[$i][2];
-            $type = $tab1[$i][3];
-            $region = $tab1[$i][4];
-            $loyer_mensuel = $tab1[$i][5];
-            $proprietaire = $tab1[$i][6];
+            $code = $tab1[$i][0];
+            $config = $tab1[$i][1];
+            $valeur = $tab1[$i][2];
 
-            $bienmodel -> insertCsvData($reference, $nom, $description, $type, $region, $loyer_mensuel,$proprietaire); 
+            $ConfigNote -> insertCsvData($code, $config, $valeur); 
         }
-        
 
         for ($i = 1; $i < count($tab2); $i++) 
         {
-            $locationmodel = new ImportLocationModel();
+            $NoteModel = new ImportNoteModel();
 
-            $reference = $tab2[$i][0];
-            $date_debut = $tab2[$i][1];
-            $duree = $tab2[$i][2];
-            $client = $tab2[$i][3];
+            $numETU = $tab2[$i][0];
+            $nom = $tab2[$i][1];
+            $prenom = $tab2[$i][2];
+            $genre = $tab2[$i][3];
+            $datedenaissance = $tab2[$i][4];
+            $promotion = $tab2[$i][5];
+            $codeMatiere = $tab2[$i][6];
+            $semestre = $tab2[$i][7];
+            $note = $this->nettoyer_note($tab2[$i][8]);
 
-            $locationmodel -> insertCsvData($reference, $date_debut, $duree, $client); 
+            $NoteModel -> insertCsvData($numETU, $nom, $prenom, $genre, $datedenaissance, $promotion, $codeMatiere, $semestre, $note);
         }
 
-        for ($i = 1; $i < count($tab3); $i++) 
-        {
-            $commissionmodel = new ImportCommissionModel();
-    
-            $nom = $tab3[$i][0];
-            $commission = $tab3[$i][1];
-            $commission = $this->nettoyer_commission($commission); // Nettoyer les pourcentages
-    
-            $commissionmodel->insertCsvData($nom, $commission); 
-        }
-        
-        $importModel ->insertCsvProprietaire();
-        $importModel->insertCsvCommission();
-        $importModel->insertCsvBien();
-        $importModel->insertCsvClient();
-        $importModel->insertCsvLocation();
-        $locationIDs = $locationModel->getAllLocationIDs();
-        $LocationDetailModel->genererdetailslocations($locationIDs);
+        $importModel->insertCsvConfigNote();
 
-        return redirect()->to('admin/gainmois');
+        $importModel->insertCsvPromotion();
+        $importModel->insertCsvEtudiant();
+        $importModel->insertCsvNotes();
+
+
+        return redirect()->to('admin/import');
     }
 
-    public function nettoyer_commission($commission)
+    public function nettoyer_note($note)
     {
-        $commission = trim($commission); // Nettoie les espaces
-        if (strpos($commission, '%') !== false) {
-            $commission = str_replace('%', '', $commission); // Enlève le caractère '%'
+        $note = trim($note); // Nettoie les espaces
+        if (strpos($note, '%') !== false) {
+            $note = str_replace('%', '', $note); // Enlève le caractère '%'
         }
-        $commission = str_replace(',', '.', $commission); // Remplace la virgule par un point si nécessaire
-        return (float)$commission;
+        $note = str_replace(',', '.', $note); // Remplace la virgule par un point si nécessaire
+        return (float)$note;
     }
 
 }

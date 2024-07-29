@@ -24,9 +24,10 @@ create table etudiant
 (
     id_etudiant serial primary key NOT NULL,
     id_prom INT NOT NULL,
-    etu INTEGER,
+    etu VARCHAR(50),
     nom VARCHAR(255),
     prenom VARCHAR(255),
+    genre VARCHAR(50),
     dtn DATE,
     statut int default 2,
     FOREIGN KEY (id_prom) REFERENCES promotion(id_prom)
@@ -122,7 +123,7 @@ create table notes
     id_etudiant INT,
     id_matiere INT,
     notes NUMERIC(5,2),
-    session DATE,
+    session DATE default current_date,
     FOREIGN KEY (id_etudiant) REFERENCES etudiant(id_etudiant),
     FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere)
 );
@@ -259,3 +260,31 @@ VALUES
     (2, 39, 14.00, '2024-07-10');
 
 
+create table config_note 
+(
+    id_conf serial primary key NOT NULL,
+    code VARCHAR(50),
+    config VARCHAR(255),
+    valeur INT
+);
+
+create table import_note 
+(
+    numETU VARCHAR(50),
+    nom VARCHAR(255),
+    prenom VARCHAR(255),
+    genre VARCHAR(50),
+    datedenaissance DATE,
+    promotion VARCHAR(50),
+    codeMatiere VARCHAR(255),
+    semestre VARCHAR(50),
+    note DECIMAL(5,2)
+
+);
+
+create table import_config_note 
+(
+    code VARCHAR(50),
+    config VARCHAR(255),
+    valeur INT
+);

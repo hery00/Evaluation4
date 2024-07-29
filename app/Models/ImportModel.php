@@ -6,10 +6,19 @@ use CodeIgniter\Model;
 
 class ImportModel extends Model
 {
-    protected $table = 'import_bien';
+    protected $table = 'import_note';
 
-    protected $allowedFields = ['reference', 'nom', 'description', 'type', 'region', 'loyer_mensuel', 'proprietaire'];
-
+    protected $allowedFields = [
+        'numETU',
+        'nom',
+        'prenom',
+        'genre', 
+        'datedenaissance',
+        'promotion', 
+        'codeMatiere',
+        'semestre',
+        'note'
+    ];
     // Méthode pour insérer les données
     // public function insertCsvData($data)
     // {
@@ -41,90 +50,83 @@ class ImportModel extends Model
 
             return $donnees;
         }
-    
-    public function insertCsvProprietaire()
-    {
-        $this->db->query('ALTER TABLE bien DISABLE TRIGGER ALL;');
 
-        $sql="INSERT INTO proprietaire (telephone) 
-        SELECT proprietaire 
-        FROM import_bien 
-        GROUP BY proprietaire";
+    // INSERT CSV NOTES
+    public function insertCsvPromotion()
+    {
+        $this->db->query('ALTER TABLE promotion DISABLE TRIGGER ALL;');
+
+        $sql="INSERT INTO promotion (nom_promotion) 
+        SELECT promotion
+        FROM import_note 
+        GROUP BY promotion";
         
         $this->db->query($sql);
-        $this->db->query('ALTER TABLE bien ENABLE TRIGGER ALL;');
-    }   
- 
+        $this->db->query('ALTER TABLE promotion ENABLE TRIGGER ALL;');
+    }  
 
-    public function insertCsvBien()
+    public function insertCsvEtudiant()
     {
-        $this->db->query('ALTER TABLE bien DISABLE TRIGGER ALL;');
+        $this->db->query('ALTER TABLE etudiant DISABLE TRIGGER ALL;');
 
-        $sql="INSERT INTO bien (reference, nom, description, region, loyer_par_mois, id_proprietaire, id_typebien) 
-        SELECT ib.reference, ib.nom, ib.description, ib.region, ib.loyer_mensuel, p.id_proprietaire, t.id_typebien 
-        FROM import_bien ib 
-        JOIN proprietaire p ON p.telephone = ib.proprietaire 
-        JOIN typedebien t ON t.nom = ib.type 
-        GROUP BY ib.reference, ib.nom, ib.description, t.id_typebien, ib.region, ib.loyer_mensuel, p.id_proprietaire";
+        $sql = "INSERT INTO etudiant (id_prom, etu, nom, prenom, genre, dtn) 
+                SELECT pr.id_prom, ino.numETU, ino.nom, ino.prenom, ino.genre, ino.datedenaissance 
+                FROM import_note ino
+                JOIN promotion pr ON pr.nom_promotion = ino.promotion
+                GROUP BY pr.id_prom, ino.numETU, ino.nom, ino.prenom, ino.genre, ino.datedenaissance";
         
         $this->db->query($sql);
-        $this->db->query('ALTER TABLE bien ENABLE TRIGGER ALL;');
+        $this->db->query('ALTER TABLE etudiant ENABLE TRIGGER ALL;');
     }
 
-    public function insertCsvCommission()
-    {
-        $this->db->query('ALTER TABLE typedebien DISABLE TRIGGER ALL;');
-
-        $sql="INSERT INTO typedebien (nom,commission) 
-        SELECT nom,commission
-        FROM import_commission
-        GROUP BY nom,commission";
-        
-        $this->db->query($sql);
-        $this->db->query('ALTER TABLE typedebien ENABLE TRIGGER ALL;');
-    }
-    //location
-    // public function insertCsvIdBienInLocation()
+    // public function insertCsvSemestre()
     // {
-    //     $locationModel = new LocationModel();
-    //     $this->db->query('ALTER TABLE bien DISABLE TRIGGER ALL;');
-    
-    //     $sql = 'SELECT id_bien FROM bien';
-    //     $query = $this->db->query($sql);
-    
-    //     foreach ($query->getResultArray() as $row) {
-    //         $id_bien = $row['id_bien'];
-    //         $locationModel->insertIdBien($id_bien);
-    //     }
-    
-    //     // Enable triggers again after the update is complete
-    //     $this->db->query('ALTER TABLE bien ENABLE TRIGGER ALL;');
-    // }
+    //     $this->db->query('ALTER TABLE semestre DISABLE TRIGGER ALL;');
 
-    public function insertCsvClient()
+    //     $sql="INSERT INTO semestre (nom_semestre) 
+    //     SELECT semestre
+    //     FROM import_note 
+    //     GROUP BY semestre ORDER BY semestre ASC";
+        
+    //     $this->db->query($sql);
+    //     $this->db->query('ALTER TABLE semestre ENABLE TRIGGER ALL;');
+    // }  
+    
+
+    public function insertCsvNotes()
     {
-        $this->db->query('ALTER TABLE location DISABLE TRIGGER ALL;');
+        $this->db->query('ALTER TABLE notes DISABLE TRIGGER ALL;');
 
-        $sql="INSERT INTO client (email) 
-        SELECT client 
-        FROM import_location 
-        GROUP BY client";
+        $sql= "INSERT INTO notes (id_etudiant, id_matiere, notes)
+        SELECT e.id_etudiant, m.id_matiere, ino.note
+        FROM import_note ino
+        JOIN etudiant e ON e.etu = ino.numETU 
+            AND e.nom = ino.nom
+            AND e.prenom = ino.prenom
+            AND e.genre = ino.genre
+            AND e.dtn = ino.datedenaissance
+        JOIN promotion pr ON pr.nom_promotion = ino.promotion
+        JOIN matiere m ON m.ue = ino.codeMatiere
+        JOIN semestre s ON s.nom_semestre = ino.semestre
+        GROUP BY e.id_etudiant, m.id_matiere, ino.note";
+
+        $this->db->query($sql);
+        $this->db->query('ALTER TABLE notes DISABLE TRIGGER ALL;');
+
+    }
+    // INSERT CSV NOTES FIN
+
+    public function insertCsvConfigNote()
+    {
+        $this->db->query('ALTER TABLE config_note DISABLE TRIGGER ALL;');
+
+        $sql= "INSERT INTO config_note (code, config, valeur)
+        SELECT ic.code, ic.config, ic.valeur
+        FROM import_config_note ic
+        GROUP BY ic.code, ic.config, ic.valeur";
         
         $this->db->query($sql);
-        $this->db->query('ALTER TABLE location ENABLE TRIGGER ALL;');
-    }   
-    
-    public function insertCsvLocation()
-    {
-        $this->db->query('ALTER TABLE location DISABLE TRIGGER ALL;');
-        $sql="INSERT INTO location (id_bien, id_client, date_debut, duree) 
-        SELECT b.id_bien, c.id_client, il.date_debut, il.duree
-        FROM import_location il 
-        JOIN bien b ON b.reference = il.reference 
-        JOIN client c ON c.email = il.client 
-        GROUP BY b.id_bien, il.date_debut, il.duree, c.id_client";
-        $this->db->query($sql);
-        $this->db->query('ALTER TABLE location ENABLE TRIGGER ALL;');
+        $this->db->query('ALTER TABLE config_note DISABLE TRIGGER ALL;');
     }
 
     // public function insertCsvCommission()

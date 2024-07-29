@@ -4,14 +4,21 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ImportCommissionModel extends Model
+class ImportNoteModel extends Model
 {
-    protected $table = 'import_commission'; 
+    protected $table = 'import_note'; 
     protected $primaryKey = 'id'; 
 
     protected $allowedFields = [
+        'numETU',
         'nom',
-        'commission'
+        'prenom',
+        'genre', 
+        'datedenaissance',
+        'promotion', 
+        'codeMatiere',
+        'semestre',
+        'note'
     ];
 
     // Optionnel : Si vous avez des colonnes de création et de mise à jour automatiques
@@ -32,10 +39,10 @@ class ImportCommissionModel extends Model
      * @param string $heure_depart
      * @return bool
      */
-    public function insertCsvData($nom,$commission)
+    public function insertCsvData($numETU, $nom, $prenom, $genre, $datedenaissance,$promotion, $codeMatiere, $semestre, $note)
     {
-        $sql = "INSERT INTO import_commission VALUES ('%s','%s')";
-        $sql = sprintf($sql,$nom, $commission);
+        $sql = "INSERT INTO import_note VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s')";
+        $sql = sprintf($sql,$numETU,$nom,$prenom,$genre,$datedenaissance,$promotion,$codeMatiere,$semestre,$note);
         echo $sql;
         $this->db->query($sql);
 

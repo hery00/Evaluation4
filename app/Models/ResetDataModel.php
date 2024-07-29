@@ -21,10 +21,11 @@ class ResetDataModel extends Model
             
             $tables = [
                 'etudiant', 
-                'matiere',
-                'notes',  
+                'notes',   
                 'promotion',
-                'semestre', 
+                'import_note',
+                'import_config_note',
+                'config_note',
             ];
 
             $db->query('SET CONSTRAINTS ALL DEFERRED');

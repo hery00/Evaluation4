@@ -2,29 +2,25 @@
     <section class="section">
       <div class="row">
         <div class="card">
-        <h3 class="card-header">Importation de données</h3>
+          <h3 class="card-header">Importation de données</h3>
           <div class="card-body">
-          <form method="post" action="<?= base_url('importcsv') ?>" enctype="multipart/form-data">
-              <div class="col-lg-6">
-                <div class="row mb-3">
-                    <label for="inputNumber" class="col-sm-2 col-form-label">Biens</label>
+            <form method="post" action="<?= base_url('importcsv') ?>" enctype="multipart/form-data">
+              <div class="row g-3">
+              <div class="col-md-6">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">Config_note</label>
                     <div class="col-sm-10">
-                    <input class="form-control" type="file" name="bien" id="csv_file" required accept=".csv">
+                      <input class="form-control" type="file" name="config_note" id="csv_file" required accept=".csv">
+                    </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="inputNumber" class="col-sm-2 col-form-label">Locations</label>
+              <div class="col-md-6">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">Notes</label>
                     <div class="col-sm-10">
-                    <input class="form-control" type="file" name="location" id="csv_file" required accept=".csv">
-                </div>
-                <div class="row mb-4">
-                    <label for="inputNumber" class="col-sm-2 col-form-label">Commissions</label>
-                    <div class="col-sm-10">
-                    <input class="form-control" type="file" name="commission" id="csv_file" required accept=".csv">
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Soumettre</button>
+                      <input class="form-control" type="file" name="note" id="csv_file" required accept=".csv">
+                    </div>
+                  </div>
+              <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+              </div>
                   </div>
                 </div>
               </div>

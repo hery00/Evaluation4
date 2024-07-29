@@ -4,16 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ImportLocationModel extends Model
+class ImportConfigNoteModel extends Model
 {
-    protected $table = 'import_location'; 
+    protected $table = 'import_config_note'; 
     protected $primaryKey = 'id'; 
 
     protected $allowedFields = [
-        'reference',
-        'date_debut',
-        'duree',
-        'client'
+        'code',
+        'config',
+        'valeur'
     ];
 
     // Optionnel : Si vous avez des colonnes de création et de mise à jour automatiques
@@ -34,10 +33,10 @@ class ImportLocationModel extends Model
      * @param string $equipe
      * @return bool
      */
-    public function insertCsvData($reference, $date_debut, $duree, $client)
+    public function insertCsvData($code, $config, $valeur)
     {
-        $sql = "INSERT INTO import_location VALUES ('%s','%s','%d','%s')";
-        $sql = sprintf($sql,$reference, $date_debut, $duree, $client);
+        $sql = "INSERT INTO import_config_note VALUES ('%s','%s','%d')";
+        $sql = sprintf($sql,$code, $config, $valeur);
         echo $sql;
         $this->db->query($sql);
 
