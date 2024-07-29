@@ -32,7 +32,7 @@ class NoteController extends BaseController
         $model = new NoteModel();
         $data['notes'] = $model->getNoteBySemesterByEtu($id_semestre,$etu);
         $data['sumCredits'] = $model->getSumCredits($data['notes']);
-        $data['moyenne'] = $model->getMoyenne($data['notes']);
+        $data['moyenne'] = $model->getMoyenne($data['notes'],$id_semestre);
 
 
         if ($data['moyenne'] < 10) {

@@ -7,6 +7,7 @@ use App\Models\AdminModel;
 use App\Models\EtudiantModel;
 use App\Models\SemestreModel;
 use App\Models\MatiereModel;
+use App\Models\NoteModel;
 use App\Models\NotesModel;
 
 
@@ -90,39 +91,44 @@ class AdminController extends BaseController
     
     
     public function listesemestre()
-    {
-        $session = session();
-        $user_statut =  $session->get('statut');
-        $session_etu = $session ->get('etu');
-        $model = new EtudiantModel();
-        $semestreModel = new SemestreModel();
-        $data['semestres'] = $semestreModel->getSemestres();
-        $etu = $this->request->getGet('etu');
-        if($user_statut == 1)
-        {
-            $data['etudiant']=$model->getEtudiantByEtu($etu);
-        }
-        elseif($user_statut == 2)
-        {
-            $data['etudiant'] = $model->getEtudiantByEtu($session_etu);;
-        }
-       
-        $content = view('Pages/listeSemestre', $data);
-
-        $layout_data = [
-            'content' => $content
-        ];
-        
-        if($user_statut == 1)
-        {
-            return view('LayoutAdmin/layout', $layout_data);
-        }
-        elseif($user_statut)
-        {
-            return view('LayoutEtudiant/layout', $layout_data);
-        }
-        
+{
+    $session = session();
+    $user_statut = $session->get('statut');
+    $session_etu = $session->get('etu');
+    $noteModel = new NoteModel();
+    $etudiantModel = new EtudiantModel();
+    $semestreModel = new SemestreModel();
+    
+    $data['semestres'] = $semestreModel->getSemestres();
+    $etu = $this->request->getGet('etu');
+    
+    if ($user_statut == 1) {
+        $data['etudiant'] = $etudiantModel->getEtudiantByEtu($etu);
+    } elseif ($user_statut == 2) {
+        $data['etudiant'] = $etudiantModel->getEtudiantByEtu($session_etu);
     }
+
+    $data['notes'] = [];
+    $data['moyenne'] = [];
+    
+    foreach ($data['semestres'] as $semestre) {
+        $id_semestre = $semestre['id_semestre']; 
+        $notes = $noteModel->getNoteBySemesterByEtu($id_semestre,  $data['etudiant']['etu']);
+        $data['moyenne'][$id_semestre] = $noteModel->getMoyenne($notes, $id_semestre);
+    }
+    
+    $content = view('Pages/listeSemestre', $data);
+
+    $layout_data = [
+        'content' => $content
+    ];
+    
+    if ($user_statut == 1) {
+        return view('LayoutAdmin/layout', $layout_data);
+    } elseif ($user_statut) {
+        return view('LayoutEtudiant/layout', $layout_data);
+    }
+}
 
     public function listeMatiereBySemestre($id_semestre)
     {

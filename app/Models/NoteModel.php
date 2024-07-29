@@ -26,63 +26,67 @@ class NoteModel extends Model
     ];
 
     public function getNoteBySemesterByEtu($id_semestre, $etu)
-    {
-        $allNotes = $this->where('id_semestre', $id_semestre)
-                        ->where('etu', $etu)
-                        ->findAll();
+{
+    $allNotes = $this->where('id_semestre', $id_semestre)
+                    ->where('etu', $etu)
+                    ->findAll();
 
-        // Initialize arrays for different conditions
-        $inf10 = [];
-        $inf6 = [];
+    // Initialize arrays for different conditions
+    $inf10 = [];
+    $inf6 = [];
 
-        // Populate arrays based on note conditions
-        foreach ($allNotes as $n) {
-            if ($n['notes'] < 10) {
-                $inf10[] = $n;
-                if ($n['notes'] < 6) {
-                    $inf6[] = $n;
-                }
+    // Populate arrays based on note conditions
+    foreach ($allNotes as $n) {
+        // Initialize the 'resultat' key
+        
+        
+        if ($n['notes'] < 10) {
+            $inf10[] = $n;
+            if ($n['notes'] < 6) {
+                $inf6[] = $n;
             }
         }
+    }
 
-        $nb_inf10 = count($inf10);
-        $nb_inf6 = count($inf6);
+    $nb_inf10 = count($inf10);
+    $nb_inf6 = count($inf6);
 
-        // Apply conditions to each note
-        foreach ($allNotes as &$n) {
-            $noteValue = $n['notes'];
+    
 
-            if ($nb_inf10 <= 2) {
-                if ($nb_inf6 == 0) {
-                    if ($noteValue < 10) {
-                        $n['resultat'] = 'Compensée';
-                    } else {
-                        $n['resultat'] = $this->classifyNote($noteValue);
-                    }
-                } elseif ($nb_inf6 > 0) {
-                    if ($noteValue < 10) {
-                        $n['resultat'] = 'Ajournée';
-                        $n['credits'] = 0;
-                    } else {
-                        $n['resultat'] = $this->classifyNote($noteValue);
-                    }
+    // Apply conditions to each note
+    foreach ($allNotes as &$n) {
+        $noteValue = $n['notes'];
+
+        if ($nb_inf10 <= 2) {
+            if ($nb_inf6 == 0) {
+                if ($noteValue < 10) {
+                    $n['resultat'] = 'Compensée';
+                } else {
+                    $n['resultat'] = $this->classifyNote($noteValue);
                 }
-            } elseif ($nb_inf10 > 2) {
+            } elseif ($nb_inf6 > 0) {
                 if ($noteValue < 10) {
                     $n['resultat'] = 'Ajournée';
                     $n['credits'] = 0;
                 } else {
                     $n['resultat'] = $this->classifyNote($noteValue);
                 }
+            }
+        } elseif ($nb_inf10 > 2) {
+            if ($noteValue < 10) {
+                $n['resultat'] = 'Ajournée';
+                $n['credits'] = 0;
             } else {
                 $n['resultat'] = $this->classifyNote($noteValue);
             }
+        } else {
+            $n['resultat'] = $this->classifyNote($noteValue);
         }
-
-        $allNotes = $this->filterMaxNotesBySubject($allNotes);
-        $filteredNotes = $this->filterMaxOptionalNotes($allNotes);
-        return $filteredNotes;
     }
+$allNotes = $this->filterMaxNotesBySubject($allNotes);
+    $filteredNotes = $this->filterMaxOptionalNotes($allNotes);
+    return $filteredNotes;
+}
 
     private function filterMaxNotesBySubject($notes)
     {
@@ -165,21 +169,30 @@ class NoteModel extends Model
         return $sumCredits;
     }
 
-    public function getMoyenne($allNotes)
-    {
-        $totalNotesPonderees = 0;
-        $totalCredits = 0;
+    public function getMoyenne($allNotes, $id_semestre)
+{
+    $model = new MatiereModel();
+    $totalNotesPonderees = 0;
+    $totalCredits = 0;
+    $matieres = $model->getMatieresBySemestre($id_semestre); // Obtenez les matières directement
 
-        foreach ($allNotes as $note) {
-            if (isset($note['resultat']) && $note['resultat'] !== 'Ajournée' && isset($note['credits']) && isset($note['notes'])) {
-                $pondere = $note['notes'] * $note['credits'];
-                $totalNotesPonderees += $pondere;
-                $totalCredits += $note['credits'];
-            }
+    foreach ($allNotes as $note) {
+        if (!isset($note['id_matiere']) || !isset($note['notes']) || !isset($note['credits'])) {
+            continue; // Ignorez les notes sans 'id_matiere', 'notes', ou 'credits'
         }
 
-        $moyenne = ($totalCredits > 0) ? $totalNotesPonderees / 30 : 0;
-
-        return round($moyenne, 2);
+        foreach ($matieres as $matiere) {
+            if ($note['id_matiere'] == $matiere['id_matiere']) {
+                $pondere = $note['notes'] * $matiere['credits'];
+                $totalNotesPonderees += $pondere;
+                $totalCredits += $matiere['credits'];
+            }
+        }
     }
+
+    $moyenne = ($totalCredits > 0) ? $totalNotesPonderees / $totalCredits : 0;
+
+    return round($moyenne, 2);
+}
+
 }

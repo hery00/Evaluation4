@@ -44,3 +44,11 @@ JOIN
 JOIN
     promotion p ON e.id_prom = p.id_prom;
 
+
+
+CREATE VIEW v_moyenne AS
+SELECT ROUND((SUM(credits * notes)) / SUM(credits), 2) AS moyenne_ponderee
+FROM v_notes_details;
+
+
+select id_etudiant,id_matiere,0 from etudiant,matiere;
