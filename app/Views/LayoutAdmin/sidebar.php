@@ -1,6 +1,12 @@
 <aside style="background-color:#536ae4; " id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
+            <a class="nav-link " href="<?= base_url('admin/dashboard') ?>">
+            <img style="max-width: 20px;" src="<?= base_url('assets/icons/PNG/ITU_icon_4.png')?>" alt="icons">
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link " href="<?= base_url('admin/listetudiant') ?>">
             <img style="max-width: 20px;" src="<?= base_url('assets/icons/PNG/ITU_icon_4.png')?>" alt="icons">
                 <span>Liste des Etudiants</span>

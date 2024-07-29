@@ -16,6 +16,11 @@ class EtudiantModel extends Model
         return $this->findAll();
     }
 
+    public function countAllEtudiants()
+    {
+        return $this->countAllResults();
+    }
+
     public function getEtudiantByEtu($etu)
     {
         $etudiant = $this->where('etu',$etu)

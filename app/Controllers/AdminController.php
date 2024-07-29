@@ -18,6 +18,53 @@ class AdminController extends BaseController
     {
             return view('Pages/login');
     }
+
+    public function dashboard()
+    {
+        $etudiantmodel = new EtudiantModel();
+        $semestremodel = new SemestreModel();
+        $notemodel = new NoteModel();
+        
+        $data['nb_etudiant'] = $etudiantmodel->countAllEtudiants();
+        $semestres = $semestremodel->getSemestres();
+        $etudiants = $etudiantmodel->getAllEtudiant();
+
+        $nb_admis = 0;
+        $nb_ajournee = 0;
+
+        foreach ($etudiants as $etudiant) {
+            $allSemestersPassed = true;
+
+            foreach ($semestres as $semestre) {
+                $id_semestre = $semestre['id_semestre'];
+                $notes = $notemodel->getNoteBySemesterByEtu($id_semestre, $etudiant['etu']);
+                $moyenne = $notemodel->getMoyenne($notes, $id_semestre);
+
+                if ($moyenne < 10) {
+                    $allSemestersPassed = false;
+                    break; // Si la moyenne d'un semestre est inférieure à 10, il n'est pas nécessaire de vérifier davantage
+                }
+            }
+
+            if ($allSemestersPassed) {
+                $nb_admis++;
+            } else {
+                $nb_ajournee++;
+            }
+        }
+
+        $data['nb_admis'] = $nb_admis;
+        $data['nb_ajournee'] = $nb_ajournee;
+
+        $content = view('Pages/dashboard', $data);
+        $layout_data = [
+            'content' => $content
+        ];
+
+        return view('LayoutAdmin/layout', $layout_data);
+    }
+
+
     
 
     public function inscrir()
