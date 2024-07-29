@@ -288,3 +288,22 @@ create table import_config_note
     config VARCHAR(255),
     valeur INT
 );
+
+
+CREATE TABLE groups_options (
+    id_groupe SERIAL PRIMARY KEY,
+    nom_groupe VARCHAR(255)
+);
+
+CREATE TABLE groupes_matieres_optionelles (
+    id SERIAL PRIMARY KEY,
+    id_groupe INT REFERENCES groups_options(id_groupe),
+    ue VARCHAR(50)
+);
+
+INSERT INTO groups_options (nom_groupe) VALUES ('Group 1'), ('Group 2'), ('Group 3');
+
+INSERT INTO groupes_matieres_optionelles (id_groupe, ue) VALUES
+(1, 'INF204'), (1, 'INF205'), (1, 'INF206'),
+(2, 'MTH204'), (2, 'MTH205'), (2, 'MTH206'),
+(3, 'INF302'), (3, 'INF303');

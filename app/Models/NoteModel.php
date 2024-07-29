@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\ConfigNoteModel;
+
 
 class NoteModel extends Model
 {
@@ -23,68 +25,79 @@ class NoteModel extends Model
         'session'
     ];
 
+
     public function getNoteBySemesterByEtu($id_semestre, $etu)
-{
-    $allNotes = $this->where('id_semestre', $id_semestre)
-                    ->where('etu', $etu)
-                    ->findAll();
-
-    // Initialize arrays for different conditions
-    $inf10 = [];
-    $inf6 = [];
-
-    // Populate arrays based on note conditions
-    foreach ($allNotes as $n) {
-        // Initialize the 'resultat' key
-        
-        
-        if ($n['notes'] < 10) {
-            $inf10[] = $n;
-            if ($n['notes'] < 6) {
-                $inf6[] = $n;
+    {
+        $config = new ConfigNoteModel();
+    
+        $allNotes = $this->where('id_semestre', $id_semestre)
+                        ->where('etu', $etu)
+                        ->findAll();
+    
+        // Initialize arrays for different conditions
+        $inf10 = [];
+        $inf6 = [];
+    
+        $allNotes = $this->filterMaxNotesBySubject($allNotes);
+        $filteredNotes = $this->filterMaxOptionalNotes($allNotes);
+    
+        $max_componsee = $config->getConfigNote('CONF2');
+        $limite_ajournee = $config->getConfigNote('CONF1');
+    
+        // Populate arrays based on note conditions
+        foreach ($filteredNotes as $n) {
+            if ($n['notes'] < 10) {
+                $inf10[] = $n;
+                if ($n['notes'] < $limite_ajournee) {
+                    $inf6[] = $n;
+                }
             }
         }
-    }
-
-    $nb_inf10 = count($inf10);
-    $nb_inf6 = count($inf6);
-
     
-
-    // Apply conditions to each note
-    foreach ($allNotes as &$n) {
-        $noteValue = $n['notes'];
-
-        if ($nb_inf10 <= 2) {
-            if ($nb_inf6 == 0) {
-                if ($noteValue < 10) {
-                    $n['resultat'] = 'Compensée';
-                } else {
-                    $n['resultat'] = $this->classifyNote($noteValue);
-                }
-            } elseif ($nb_inf6 > 0) {
-                if ($noteValue < 10) {
+        $nb_inf10 = count($inf10);
+        $nb_inf6 = count($inf6);
+    
+        echo "<pre>";
+        echo "Inf10 Count: " . $nb_inf10 . "\n";
+        echo "Inf6 Count: " . $nb_inf6 . "\n";
+        echo "</pre>";
+    
+        foreach ($filteredNotes as &$n)
+        {
+            $noteValue = $n['notes'];
+    
+            if ($noteValue < $limite_ajournee) {
+                $n['resultat'] = 'Ajournée';
+                $n['credits'] = 0;
+            } elseif ($noteValue >= $limite_ajournee && $noteValue < 10) {
+                if ($nb_inf6 > 0) {
                     $n['resultat'] = 'Ajournée';
                     $n['credits'] = 0;
                 } else {
-                    $n['resultat'] = $this->classifyNote($noteValue);
+                    if ($nb_inf10 <= $max_componsee) {
+                        $n['resultat'] = 'Compensée';
+                    } else {
+                        $n['resultat'] = 'Ajournée';
+                        $n['credits'] = 0;
+                    }
                 }
             }
-        } elseif ($nb_inf10 > 2) {
-            if ($noteValue < 10) {
-                $n['resultat'] = 'Ajournée';
-                $n['credits'] = 0;
-            } else {
-                $n['resultat'] = $this->classifyNote($noteValue);
+            else {
+                if ($noteValue >= 16) {
+                    $n['resultat'] = 'Excellent';
+                } elseif ($noteValue >= 14) {
+                    $n['resultat'] = 'Bien';
+                } elseif ($noteValue >= 12) {
+                    $n['resultat'] = 'Assez Bien';
+                } elseif ($noteValue >= 10) {
+                    $n['resultat'] = 'Passable';
+                }
             }
-        } else {
-            $n['resultat'] = $this->classifyNote($noteValue);
         }
+    
+        return $filteredNotes;
     }
-$allNotes = $this->filterMaxNotesBySubject($allNotes);
-    $filteredNotes = $this->filterMaxOptionalNotes($allNotes);
-    return $filteredNotes;
-}
+    
 
     private function filterMaxNotesBySubject($notes)
     {
@@ -99,45 +112,56 @@ $allNotes = $this->filterMaxNotesBySubject($allNotes);
     }
 
     private function filterMaxOptionalNotes($notes)
-    {
-        $groupedNotes = [];
-        $groups = $this->getOptionalGroups();
+{
+    $groupedNotes = [];
+    $groups = $this->getOptionalGroups();
+    $allGroupSubjects = [];
 
-        foreach ($groups as $group) {
-            $optionalNotes = [];
-            foreach ($notes as $note) {
-                if (in_array($note['ue'], $group)) {
-                    $optionalNotes[] = $note;
-                }
-            }
-
-            if (!empty($optionalNotes)) {
-                $maxNote = max(array_column($optionalNotes, 'notes'));
-                foreach ($optionalNotes as $note) {
-                    if ($note['notes'] == $maxNote) {
-                        $groupedNotes[] = $note;
-                        break; 
-                    }
-                }
-            }
-        }
-        
+    foreach ($groups as $group) {
+        $optionalNotes = [];
         foreach ($notes as $note) {
-            if (!in_array($note['ue'], array_merge(...$groups))) {
-                $groupedNotes[] = $note;
+            if (in_array($note['ue'], $group)) {
+                $optionalNotes[] = $note;
             }
         }
 
-        return $groupedNotes;
+        if (!empty($optionalNotes)) {
+            $maxNote = max(array_column($optionalNotes, 'notes'));
+            foreach ($optionalNotes as $note) {
+                if ($note['notes'] == $maxNote) {
+                    $groupedNotes[] = $note;
+                    break;
+                }
+            }
+        }
+
+        // Collect all subjects from groups for later use
+        $allGroupSubjects = array_merge($allGroupSubjects, $group);
     }
 
-    private function getOptionalGroups()
+    foreach ($notes as $note) {
+        if (!in_array($note['ue'], $allGroupSubjects)) {
+            $groupedNotes[] = $note;
+        }
+    }
+
+    return $groupedNotes;
+}
+
+    public function getOptionalGroups()
     {
-        return [
-            ['INF204', 'INF205', 'INF206'],
-            ['MTH204', 'MTH205', 'MTH206'],
-            ['INF302', 'INF303']
-        ];
+        $db = \Config\Database::connect();
+        $builder = $db->table('groupes_matieres_optionelles');
+        $builder->select('groups_options.nom_groupe, groupes_matieres_optionelles.ue');
+        $builder->join('groups_options', 'groups_options.id_groupe = groupes_matieres_optionelles.id_groupe');
+        $query = $builder->get();
+
+        $groups = [];
+        foreach ($query->getResult() as $row) {
+            $groups[$row->nom_groupe][] = $row->ue;
+        }
+
+        return $groups;
     }
 
     private function classifyNote($noteValue)

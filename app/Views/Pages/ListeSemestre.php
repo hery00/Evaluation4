@@ -12,7 +12,7 @@
                                         <p><strong style="color:#283a97;">ÉTUDIANT:</strong> <?= esc($etudiant['nom']) ?> <?= esc($etudiant['prenom']) ?></p>
                                     </div>
                                     <div class="col-lg-3">
-                                        <p><strong style="color:#283a97;">ETU:</strong> 00<?= esc($etudiant['etu']) ?></p>
+                                        <p><strong style="color:#283a97;">ETU:</strong> <?= esc($etudiant['etu']) ?></p>
                                     </div>
                                     <div class="col-lg-3">
                                         <p><strong style="color:#283a97;">PROMOTION:</strong> <?= esc($etudiant['nom_promotion']) ?></p>
