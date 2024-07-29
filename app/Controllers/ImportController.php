@@ -68,7 +68,7 @@ class ImportController extends BaseController
         $importModel->insertCsvNotes();
 
 
-        return redirect()->to('admin/import');
+        return redirect()->to('admin/listetudiant');
     }
 
     public function nettoyer_note($note)

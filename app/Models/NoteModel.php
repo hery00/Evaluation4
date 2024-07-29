@@ -57,10 +57,10 @@ class NoteModel extends Model
         $nb_inf10 = count($inf10);
         $nb_inf6 = count($inf6);
     
-        echo "<pre>";
-        echo "Inf10 Count: " . $nb_inf10 . "\n";
-        echo "Inf6 Count: " . $nb_inf6 . "\n";
-        echo "</pre>";
+        // echo "<pre>";
+        // echo "Inf10 Count: " . $nb_inf10 . "\n";
+        // echo "Inf6 Count: " . $nb_inf6 . "\n";
+        // echo "</pre>";
     
         foreach ($filteredNotes as &$n)
         {
